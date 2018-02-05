@@ -8,7 +8,7 @@
         line: '127.0.1.1	synapticon'
     - name: Replace /etc/hostname
       copy:
-        src: hostname
+        src: ./root/etc/hostname
         dest: /etc/hostname
         owner: root
         group: root
@@ -40,6 +40,7 @@
         - autoconf
         - libtool
         - git
+        - python3-pip
 
     - name: Install packages to allow apt to use a repository over HTTPS
       apt: name={{item}} update_cache=yes
@@ -55,13 +56,13 @@
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
     - name: Install Docker CE
       apt: name=docker-ce
-
     - name: Add ubuntu user to docker group
       user:
         name: ubuntu
         groups: docker
         append: yes
-
+    - name: Pip install docker-py
+      pip: name=docker-py
     - name: Run motion-master-bridge container
       docker_container:
         name: motion-master-bridge
@@ -69,7 +70,6 @@
         recreate: yes
         network_mode: host
         restart_policy: always
-
     - name: Run oblac-drives container
       docker_container:
         name: oblac-drives
@@ -78,3 +78,28 @@
         restart_policy: always
         published_ports:
           - 80:80
+    
+    - name: Git clone Etherlab_EtherCAT_Master
+      git:
+        repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
+        dest: /opt/Etherlab_EtherCAT_Master
+    - name: Install Etherlab_EtherCAT_Master
+      command: "{{ item }}"
+      with_items:
+        - "./bootstrap"
+        - "./configure --enable-sii-assign --disable-8139too --enable-hrtimer --enable-cycles"
+        - "make all modules"
+        - "make modules_install install"
+        - "ldconfig"
+        - "depmod"
+      args:
+        chdir: /opt/Etherlab_EtherCAT_Master
+    - name: Remove cloned Etherlab_EtherCAT_Master directory
+      file:
+        state: absent
+        path: /opt/Etherlab_EtherCAT_Master
+    - name: Add ethercat binary to $PATH
+      file:
+        src: /opt/etherlab/bin/ethercat
+        dest: /usr/local/bin/ethercat
+        state: link
