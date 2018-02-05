@@ -1,0 +1,10 @@
+[
+    {
+        "Description": "Ubuntu Server 16.04.3 LTS",
+        "Format": "ova",
+        "UserBucket": {
+            "S3Bucket": "oblac-drives-vms",
+            "S3Key": "ubuntu-server-16.04.3-lts.ova"
+        }
+    }
+]
