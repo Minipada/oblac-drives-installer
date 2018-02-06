@@ -4,7 +4,7 @@
         "Format": "ova",
         "UserBucket": {
             "S3Bucket": "oblac-drives-vms",
-            "S3Key": "ubuntu-server-16.04.3-lts.ova"
+            "S3Key": "ubuntu-16.04.3-server-amd64.ova"
         }
     }
 ]
