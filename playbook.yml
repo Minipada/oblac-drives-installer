@@ -8,8 +8,8 @@
         line: '127.0.1.1	synapticon'
     - name: Replace /etc/hostname
       copy:
-        src: ./root/etc/hostname
-        dest: /etc/hostname
+        src: etc/hostname
+        dest: /etc/
         owner: root
         group: root
         mode: 0644
@@ -19,6 +19,11 @@
         path: /etc/sudoers
         line: 'ubuntu ALL=(ALL) NOPASSWD:ALL'
 
+    - name: Enable autologin for ubuntu user
+      copy:
+        src: etc/systemd/system/getty@tty1.service.d
+        dest: /etc/systemd/system/
+
     - name: Change grub screen resolution
       lineinfile:
         path: /etc/default/grub
@@ -26,6 +31,15 @@
         line: 'GRUB_GFXMODE=1024x768'
     - name: Update grub
       command: /usr/sbin/update-grub
+
+    - name: Set authorized key
+      authorized_key:
+        user: ubuntu
+        key: "{{ item }}"
+        state: present
+        exclusive: True
+      with_file:
+        - rsa.pub
 
     - name: Remove cdrom sources from /etc/apt/sources.list
       lineinfile:
@@ -78,7 +92,7 @@
         restart_policy: always
         published_ports:
           - 80:80
-    
+
     - name: Git clone Etherlab_EtherCAT_Master
       git:
         repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
@@ -103,3 +117,94 @@
         src: /opt/etherlab/bin/ethercat
         dest: /usr/local/bin/ethercat
         state: link
+
+    - name: Copy shell scripts
+      copy:
+        src: "{{ item }}"
+        dest: /opt/
+        owner: root
+        mode: 0755
+      with_fileglob:
+        - opt/*.sh
+    - name: Copy motion-master
+      copy:
+        src: opt/motion-master
+        dest: /opt/
+        owner: root
+        mode: 0755
+    - name: Copy ubuntu user binaries
+      copy:
+        src: "{{ item }}"
+        dest: /home/ubuntu/bin/
+        mode: 0755
+      with_fileglob:
+        - home/ubuntu/bin/*
+    - name: Copy somanet_cia402.sii
+      copy:
+        src: opt/somanet_cia402.sii
+        dest: /opt/
+        owner: root
+        mode: 0644
+    - name: Copy systemd services
+      copy:
+        src: "{{ item }}"
+        dest: /etc/systemd/system/
+        owner: root
+        mode: 0644
+      with_fileglob:
+        - etc/systemd/system/*.service
+
+    - name: Enable systemd services
+      systemd:
+        name: "{{ item }}"
+        enabled: yes
+      with_items:
+        - ethercat-update-conf.service
+        - ethercat.service
+        - ethercat-watchdog.service
+        - motion-master.service
+
+    - name: Stop kernel messages from flooding console
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: 'kernel.printk = 3 4 1 3'
+
+    - name: Copy EtherCAT udev rules
+      copy:
+        src: etc/udev/rules.d/99-EtherCAT.rules
+        dest: /etc/udev/rules.d/
+        owner: root
+        mode: 644
+
+    - name: Copy profile.d ethercat slave script
+      copy:
+        src: etc/profile.d/ethercat-slave.sh
+        dest: /etc/profile.d/
+        owner: root
+        mode: 0644
+
+    - name: Disable networking service
+      systemd:
+        name: networking
+        enabled: no
+    - name: Copy systemd network files
+      copy:
+        src: "{{ item }}"
+        dest: /etc/systemd/network/
+        owner: root
+        mode: 0644
+      with_fileglob:
+        - etc/systemd/network/*
+    - name: Enable systemd-networkd service
+      systemd:
+        name: systemd-networkd
+        enabled: yes
+
+    - name: Copy motd files
+      copy:
+        src: "{{ item }}"
+        dest: /etc/update-motd.d/
+        owner: root
+        mode: 0755
+      with_fileglob:
+        - etc/update-motd.d/*
