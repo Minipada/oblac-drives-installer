@@ -20,13 +20,12 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Import the VM
 
-    $ aws s3 cp ubuntu-server-16.04.3-lts.ova s3://oblac-drives-vms/
-    $ aws s3api put-object-acl --acl public-read --bucket oblac-drives-vms --key ubuntu-server-16.04.3-lts.ova
+    $ aws s3api put-object-acl --acl public-read --bucket oblac-drives-vms --key ubuntu-16.04.3-server-amd64.ova
     $ aws ec2 import-image --description "Ubuntu Server 16.04.3 LTS" --license-type BYOL --disk-containers file://containers.json
 
 ## Check the Status of the Import Task
 
-    $ aws ec2 describe-import-image-tasks --import-task-ids import-ami-fha05auw
+    $ aws ec2 describe-import-image-tasks --import-task-ids import-ami-fhartqy5
 
 ## Run an Instance
 
