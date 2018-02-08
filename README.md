@@ -7,11 +7,11 @@
 
 To convert a VMX to an OVA file, type a command like the following:
 
-    $ ovftool ~/vmware/Ubuntu\ Server\ 16.04.3\ LTS/Ubuntu\ Server\ 16.04.3\ LTS.vmx Ubuntu\ Server\ 16.04.3\ LTS.ova
+    $ ovftool ~/vmware/ubuntu-16.04.3-server-amd64/ubuntu-16.04.3-server-amd64.vmx ubuntu-16.04.3-server-amd64.ova
 
 ## Upload OVA to S3
 
-    $ aws s3 cp ubuntu-server-16.04.3-lts.ova s3://oblac-drives-vms/
+    $ aws s3 cp ubuntu-16.04.3-server-amd64.ova s3://oblac-drives-vms/
 
 ## VM Import Service Role
 
@@ -39,9 +39,10 @@ To convert a VMX to an OVA file, type a command like the following:
 
     $ aws ec2 describe-export-tasks --export-task-ids export-i-fgtueuv0
 
-## Run playbook
+## Run playbooks
 
-    $ ansible-playbook -i inventory playbook.yml
+    $ ansible-playbook -i vm vm.yml
+    $ ansible-playbook aws.yml
 
 ## Resources
 

@@ -1,0 +1,14 @@
+---
+- hosts: vm
+  user: ubuntu
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_user: ubuntu
+    ansible_ssh_pass: ubuntu
+    ansible_become: true
+    ansible_sudo_pass: ubuntu
+    ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+
+  roles:
+    - oblac-drives
