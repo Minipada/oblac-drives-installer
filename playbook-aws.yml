@@ -1,5 +1,50 @@
 ---
-- hosts: vm
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Launch ec2 instance
+      ec2:
+        region: us-east-1
+        group_id: sg-15931962
+        instance_type: t2.micro
+        image: ami-383c3442
+        vpc_subnet_id: subnet-adcbe497
+        wait: yes
+        count: 1
+        assign_public_ip: yes
+        volumes:
+          - device_name: /dev/sda1
+            volume_size: 20
+            delete_on_termination: true
+      register: ec2
+
+    - name: Store ec2 facts
+      set_fact:
+        ec2_instance: "{{ ec2.instances | first }}"
+      when: ec2.changed
+
+    - name: Wait for SSH service
+      wait_for:
+        host: "{{ ec2_instance.public_ip }}"
+        port: 22
+
+    - name: Add ec2 IP to host group
+      add_host: hostname={{ ec2_instance.public_ip }} group=ec2_hosts
+
+- hosts: ec2_hosts
+  user: ubuntu
+  gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_user: ubuntu
+    ansible_ssh_pass: ubuntu
+    ansible_become: true
+    ansible_sudo_pass: ubuntu
+    ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+
   tasks:
 
     - name: Set synapticon as host name for loopback interface
@@ -7,7 +52,7 @@
         path: /etc/hosts
         regexp: '^127.0.1.1'
         line: '127.0.1.1	synapticon'
-    
+
     - name: Replace /etc/hostname
       copy:
         src: etc/hostname

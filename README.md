@@ -33,7 +33,7 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Export an Instance
 
-    $ aws ec2 create-instance-export-task --instance-id i-09e4657a5c19464ca --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives-vms
+    $ aws ec2 create-instance-export-task --description "Ubuntu Server 16.04.3 LTS" --instance-id i-0e9be87922aac17e6 --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives-vms
 
 ## Monitor Instance Export
 
