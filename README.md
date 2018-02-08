@@ -1,5 +1,6 @@
 # OBLAC Drives Automation
 
+Documentation and provisioning scripts to get from a bare-metal machine to a machine that runs OBLAC Drives and dependent services.
 
 ## Examples of Using VMware OVF Tool Usage
 
