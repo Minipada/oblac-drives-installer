@@ -242,5 +242,5 @@
     owner: root
     mode: 0644
 
-- name: Clean-up
-  script: opt/clean-up.sh
+# - name: Clean-up
+#   script: opt/clean-up.sh
