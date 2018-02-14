@@ -6,7 +6,7 @@ deploy () {
     sed -i -e "s/export-i-base/${2}/g" exports/$1/$2.ovf
     openssl sha1 exports/$1/$2-disk-1.vmdk exports/$1/$2.ovf > exports/$1/$2.mf
     tar -cvf exports/$1/$2.ova -C exports/$1/ $2.ovf $2-disk-1.vmdk $2.mf
-    aws s3 cp exports/$1/$2.ova s3://oblac-drives-vms
+    aws s3 cp exports/$1/$2.ova s3://oblac-drives-vms --acl public-read
 }
 
 mkdir -p exports
