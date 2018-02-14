@@ -6,11 +6,11 @@ deploy () {
   sed -i -e "s/export-i-base/${2}/g" exports/$1/$2.ovf
   openssl sha1 exports/$1/$2-disk-1.vmdk exports/$1/$2.ovf > exports/$1/$2.mf
   tar -cvf exports/$1/$2.ova -C exports/$1/ $2.ovf $2-disk-1.vmdk $2.mf
-  aws s3 cp exports/$1/$2.ova s3://oblac-drives-vms --acl public-read
+  aws s3 cp exports/$1/$2.ova s3://oblac-drives --acl public-read
 }
 
 mkdir -p exports
-aws s3 sync s3://oblac-drives-vms exports/ --exclude="*" --include="export-*"
+aws s3 sync s3://oblac-drives exports/ --exclude="*" --include="export-*"
 
 for file in exports/*.ova
 do
@@ -24,7 +24,7 @@ do
     deploy $name oblac-drives
     suffix=`date +%Y%m%d-%H%M`
     deploy $name oblac-drives-${suffix}
-    aws s3 rm s3://oblac-drives-vms/$name.ova
+    aws s3 rm s3://oblac-drives/$name.ova
     rm -rf exports/$name*
   fi
 done

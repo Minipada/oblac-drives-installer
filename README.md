@@ -12,7 +12,7 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Upload OVA to S3
 
-    $ aws s3 cp ubuntu-16.04.3-server-amd64.ova s3://oblac-drives-vms/
+    $ aws s3 cp ubuntu-16.04.3-server-amd64.ova s3://oblac-drives/
 
 ## VM Import Service Role
 
@@ -21,7 +21,7 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Import the VM
 
-    $ aws s3api put-object-acl --acl public-read --bucket oblac-drives-vms --key ubuntu-16.04.3-server-amd64.ova
+    $ aws s3api put-object-acl --acl public-read --bucket oblac-drives --key ubuntu-16.04.3-server-amd64.ova
     $ aws ec2 import-image --description "Ubuntu Server 16.04.3 LTS" --license-type BYOL --disk-containers file://containers.json
 
 ## Check the Status of the Import Task
@@ -34,7 +34,7 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Export an Instance
 
-    $ aws ec2 create-instance-export-task --description "Ubuntu Server 16.04.3 LTS" --instance-id i-0e9be87922aac17e6 --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives-vms
+    $ aws ec2 create-instance-export-task --description "Ubuntu Server 16.04.3 LTS" --instance-id i-0e9be87922aac17e6 --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives
 
 ## Monitor Instance Export
 

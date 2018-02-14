@@ -81,7 +81,7 @@
   tasks:
 
     - name: Export EC2 instance
-      command: aws ec2 create-instance-export-task --description "Ubuntu Server 16.04.3 LTS" --instance-id {{ hostvars["localhost"]["ec2_instance"]["id"] }} --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives-vms
+      command: aws ec2 create-instance-export-task --description "Ubuntu Server 16.04.3 LTS" --instance-id {{ hostvars["localhost"]["ec2_instance"]["id"] }} --target-environment vmware --export-to-s3-task DiskImageFormat=VMDK,ContainerFormat=ova,S3Bucket=oblac-drives
       register: export_task
 
     - debug: msg="{{ export_task.stdout }}"
