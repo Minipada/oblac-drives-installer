@@ -2,7 +2,6 @@
 
 deploy () {
     cp exports/$1/$1-disk-1.vmdk exports/$1/$2-disk-1.vmdk
-    cp exports/$1/$1.mf exports/$1/$2.mf
     cp export-i-base.ovf exports/$1/$2.ovf
     sed -i -e "s/export-i-base/${2}/g" exports/$1/$2.ovf
     openssl sha1 exports/$1/$2-disk-1.vmdk exports/$1/$2.ovf > exports/$1/$2.mf
