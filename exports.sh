@@ -25,6 +25,6 @@ do
     suffix=`date +%Y%m%d-%H%M`
     deploy $name oblac-drives-${suffix}
     aws s3 rm s3://oblac-drives-vms/$name.ova
-    rm -rf exports/$name
+    rm -rf exports/$name*
   fi
 done
