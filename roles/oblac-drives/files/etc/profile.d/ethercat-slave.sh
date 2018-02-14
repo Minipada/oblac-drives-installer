@@ -1,2 +1,7 @@
 sleep 3
-ethercat slave
+
+if [ $(ethercat sl | wc -l) -ne 0 ]
+then
+  ethercat sl
+  printf "\n"
+fi
