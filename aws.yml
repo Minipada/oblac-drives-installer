@@ -50,6 +50,9 @@
     - name: Add EC2 IP to host group
       add_host: hostname={{ ec2_instance.public_ip }} group=ec2_hosts
 
+    - name: Sync firmwares
+      command: aws s3 sync s3://synapticon-tools/firmwares firmwares
+
 - hosts: ec2_hosts
   user: ubuntu
   gather_facts: true
@@ -60,6 +63,13 @@
     ansible_become: true
     ansible_sudo_pass: ubuntu
     ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+
+   - name: Copy firmwares
+     copy:
+       src: firmwares
+       dest: /opt
 
   roles:
     - oblac-drives

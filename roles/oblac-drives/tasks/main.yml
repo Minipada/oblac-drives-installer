@@ -175,6 +175,8 @@
     restart_policy: always
     published_ports:
       - 80:80
+    volumes:
+      - /opt/firmwares:/usr/share/nginx/html/firmwares:ro
 
 - name: Copy ubuntu user binaries
   copy:

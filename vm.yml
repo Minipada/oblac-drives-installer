@@ -1,4 +1,13 @@
 ---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+  - name: Sync firmwares
+    command: aws s3 sync s3://synapticon-tools/firmwares firmwares
+
 - hosts: vm
   user: ubuntu
   gather_facts: true
@@ -9,6 +18,13 @@
     ansible_become: true
     ansible_sudo_pass: ubuntu
     ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+
+   - name: Copy firmwares
+     copy:
+       src: firmwares
+       dest: /opt
 
   roles:
     - oblac-drives

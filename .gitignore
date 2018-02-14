@@ -1,4 +1,5 @@
 exports/
+firmwares/
 *.ova
 *.retry
 rsa
