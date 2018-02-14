@@ -12,6 +12,7 @@ deploy () {
     rm -rf exports/$1
 }
 
+mkdir -p exports
 aws s3 sync s3://oblac-drives-vms exports/ --exclude="*" --include="export-*"
 
 for file in exports/*.ova
