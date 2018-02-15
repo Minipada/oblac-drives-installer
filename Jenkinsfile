@@ -6,7 +6,13 @@ pipeline {
         AWS_DEFAULT_REGION = 'us-east-1'
     }
     stages {
-        stage('Deploy') {
+        stage('Copy motion-master binary') {
+            steps {
+                copyArtifacts(projectName: 'motion-master');
+                sh 'cp bin/motion-master roles/oblac-drives/files/opt';
+            }
+        }
+        stage('Create OBLAC Drives VMs') {
             steps {
                 ansiblePlaybook playbook: 'aws.yml'
             }
