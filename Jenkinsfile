@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Copy motion-master binary') {
             steps {
-                copyArtifacts(projectName: 'motion-master');
+                copyArtifacts(projectName: 'motion-master/master');
                 sh 'cp bin/motion-master roles/oblac-drives/files/opt';
             }
         }
