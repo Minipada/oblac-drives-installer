@@ -28,7 +28,7 @@
         vpc_subnet_id: subnet-adcbe497
         wait: yes
         count: 1
-        assign_public_ip: yes
+        assign_public_ip: no
         volumes:
           - device_name: /dev/sda1
             volume_size: 20
@@ -44,11 +44,11 @@
 
     - name: Wait for SSH service
       wait_for:
-        host: "{{ ec2_instance.public_ip }}"
+        host: "{{ ec2_instance.private_ip }}"
         port: 22
 
     - name: Add EC2 IP to host group
-      add_host: hostname={{ ec2_instance.public_ip }} group=ec2_hosts
+      add_host: hostname={{ ec2_instance.private_ip }} group=ec2_hosts
 
     - name: Sync firmwares
       command: aws s3 sync s3://synapticon-tools/firmwares firmwares
