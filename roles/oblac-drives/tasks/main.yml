@@ -163,6 +163,7 @@
   docker_container:
     name: motion-master-bridge
     image: synapticon/motion-master-bridge
+    pull: yes
     recreate: yes
     network_mode: host
     restart_policy: always
@@ -171,6 +172,7 @@
   docker_container:
     name: oblac-drives
     image: synapticon/oblac-drives
+    pull: yes
     recreate: yes
     restart_policy: always
     published_ports:
