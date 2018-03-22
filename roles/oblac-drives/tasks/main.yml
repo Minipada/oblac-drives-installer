@@ -1,9 +1,4 @@
 ---
-- name: Change the default ubuntu user password to nRMn52qGPXkAKBxNliJ8
-  user:
-    name: 'ubuntu'
-    password: '$6$bjwZcCrvQ10Qu$yF64e32jkUub.oUyz9deO6NMMc5ayJoGan5UQ5hgh9aOtDg84lxk.MaQCpuyoMHyXyyAkTue1.p9pduedQpBT1'
-
 - name: Set synapticon as host name for loopback interface
   lineinfile:
     path: /etc/hosts
@@ -253,3 +248,8 @@
 
 - name: Clean-up
   script: opt/clean-up.sh
+  
+- name: Change the default ubuntu user password to nRMn52qGPXkAKBxNliJ8
+  user:
+    name: 'ubuntu'
+    password: '$6$bjwZcCrvQ10Qu$yF64e32jkUub.oUyz9deO6NMMc5ayJoGan5UQ5hgh9aOtDg84lxk.MaQCpuyoMHyXyyAkTue1.p9pduedQpBT1'
