@@ -21,7 +21,8 @@ do
     fi
     mkdir exports/$name
     tar -xvf $file -C exports/$name/
-    deploy $name oblac-drives
+    # Do not automatically overwrite the official release version
+    # deploy $name oblac-drives
     suffix=`date +%Y%m%d-%H%M`
     deploy $name oblac-drives-${suffix}
     aws s3 rm s3://oblac-drives/$name.ova
