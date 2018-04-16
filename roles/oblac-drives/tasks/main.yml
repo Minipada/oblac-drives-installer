@@ -1,4 +1,14 @@
 ---
+- name: Run sudo command with no password for ubuntu user
+  lineinfile:
+    path: /etc/sudoers
+    line: 'ubuntu ALL=(ALL) NOPASSWD:ALL'
+
+- name: Change the default ubuntu user password to nRMn52qGPXkAKBxNliJ8
+  user:
+    name: 'ubuntu'
+    password: '$6$bjwZcCrvQ10Qu$yF64e32jkUub.oUyz9deO6NMMc5ayJoGan5UQ5hgh9aOtDg84lxk.MaQCpuyoMHyXyyAkTue1.p9pduedQpBT1'
+
 - name: Set synapticon as host name for loopback interface
   lineinfile:
     path: /etc/hosts
@@ -32,11 +42,6 @@
     exclusive: True
   with_file:
     - rsa.pub
-
-- name: Run sudo command with no password for ubuntu user
-  lineinfile:
-    path: /etc/sudoers
-    line: 'ubuntu ALL=(ALL) NOPASSWD:ALL'
 
 - name: Enable autologin for ubuntu user
   copy:
@@ -163,6 +168,7 @@
   docker_container:
     name: motion-master-bridge
     image: synapticon/motion-master-bridge
+    pull: yes
     recreate: yes
     network_mode: host
     restart_policy: always
@@ -171,6 +177,7 @@
   docker_container:
     name: oblac-drives
     image: synapticon/oblac-drives
+    pull: yes
     recreate: yes
     restart_policy: always
     published_ports:
