@@ -22,7 +22,14 @@ pipeline {
         }
         stage('Create OBLAC Drives VMs') {
             steps {
-                ansiblePlaybook playbook: 'aws.yml'
+                ansiblePlaybook('aws.yml') {
+                    extraVars {
+                        extraVar('bundle_version', '${params.bundle_version}')
+                        extraVar('oblac_drives_version', '${params.oblac_drives_version}')
+                        extraVar('motion_master_version', '${params.motion_master_version}')
+                        extraVar('motion_master_bridge_version', '${params.motion_master_bridge_version}')
+                    }
+                }
             }
         }
     }
