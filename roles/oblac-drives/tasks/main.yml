@@ -185,6 +185,9 @@
     volumes:
       - /opt/firmwares:/usr/share/nginx/html/firmwares:ro
 
+- name: Replace bundle version in the running oblac-drives container
+  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main.*.bundle.js"
+
 - name: Copy ubuntu user binaries
   copy:
     src: "{{ item }}"

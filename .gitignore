@@ -3,3 +3,4 @@ firmwares/
 *.ova
 *.retry
 rsa
+roles/foo
