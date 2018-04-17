@@ -196,12 +196,17 @@
   with_fileglob:
     - home/ubuntu/bin/*
 
-- name: Copy motion-master
+- name: Copy motion-master binary artifact from CI
   copy:
     src: opt/motion-master
     dest: /opt/
     owner: root
     mode: 0755
+  when: motion_master_version == ''
+
+- name: Get motion-master binary from AWS S3 synapticon-tools/motion-master/release/
+  s3: bucket=synapticon-tools object=/motion-master/release/{{ motion_master_version }} dest=/opt/motion-master mode=get
+  when: motion_master_version != ''
 
 - name: Copy shell scripts
   copy:
