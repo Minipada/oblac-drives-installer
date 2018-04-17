@@ -167,7 +167,7 @@
 - name: Run motion-master-bridge container
   docker_container:
     name: motion-master-bridge
-    image: synapticon/motion-master-bridge:"{{ motion_master_bridge_version }}"
+    image: synapticon/motion-master-bridge:{{ motion_master_bridge_version }}
     pull: yes
     recreate: yes
     network_mode: host
@@ -176,7 +176,7 @@
 - name: Run oblac-drives container
   docker_container:
     name: oblac-drives
-    image: synapticon/oblac-drives:"{{ oblac_drives_version }}"
+    image: synapticon/oblac-drives:{{ oblac_drives_version }}
     pull: yes
     recreate: yes
     restart_policy: always
