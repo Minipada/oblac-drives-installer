@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        text(name: 'bundleVersion', description: '');
-        text(name: 'oblacDrivesVersion', defaultValue: 'latest');
-        text(name: 'motionMasterVersion', defaultValue: 'latest');
-        text(name: 'motionMasterBridgeVersion', defaultValue: 'latest');
-        text(name: 'ethercatMasterVersion', defaultValue: 'latest');
+        text(name: 'bundle_version', description: '');
+        text(name: 'oblac_drives_version', defaultValue: 'latest');
+        text(name: 'motion_master_version', defaultValue: 'latest');
+        text(name: 'motion_master_bridge_version', defaultValue: 'latest');
     }
 
     environment {
