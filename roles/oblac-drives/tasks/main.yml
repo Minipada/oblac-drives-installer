@@ -205,7 +205,7 @@
   when: motion_master_version == ''
 
 - name: Get motion-master binary from AWS S3 synapticon-tools/motion-master/release/
-  s3: bucket=synapticon-tools object=/motion-master/release/{{ motion_master_version }} dest=/opt/motion-master mode=get
+  aws_s3: bucket=synapticon-tools object=/motion-master/release/{{ motion_master_version }} dest=/opt/motion-master mode=get
   when: motion_master_version != ''
 
 - name: Copy shell scripts
