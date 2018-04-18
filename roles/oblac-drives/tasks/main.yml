@@ -212,8 +212,16 @@
     volumes:
       - /opt/firmwares:/usr/share/nginx/html/firmwares:ro
 
-- name: Replace bundle version in the running oblac-drives container
+- stat: path=/usr/share/nginx/html/main.bundle.js
+  register: main_bundle
+
+- name: Replace bundle version in the running oblac-drives container file main.bundle.js
+  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main.bundle.js"
+  when: main_bundle.stat.exists == True
+
+- name: Replace bundle version in the running oblac-drives container file main.*.bundle.js
   shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main.*.bundle.js"
+  when: main_bundle.stat.exists == False
 
 - name: Copy ubuntu user binaries
   copy:
