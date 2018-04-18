@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        text(name: 'bundle_version', description: '');
+        text(name: 'bundle_version', description: 'https://s3.amazonaws.com/oblac-drives/index.html');
         text(name: 'oblac_drives_version', defaultValue: 'latest');
         text(name: 'motion_master_version', defaultValue: 'latest');
         text(name: 'motion_master_bridge_version', defaultValue: 'latest');
