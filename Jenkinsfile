@@ -1,9 +1,9 @@
 pipeline {
     agent any
     parameters {
-        text(name: 'bundle_version', description: 'The list of already released bundles: https://s3.amazonaws.com/oblac-drives/index.html');
+        text(name: 'bundle_version', description: 'See the list of already <a href="https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json">released bundles</a>, or the list of <a href="https://s3.amazonaws.com/oblac-drives/index.html">built VMs</a>.');
         text(name: 'oblac_drives_version', defaultValue: 'latest');
-        text(name: 'motion_master_version', defaultValue: '', description: 'Specify motion-master version from AWS S3 synapticon-tools/motion-master/release/ to download or if left empty copy a binary from the motion-master Jenkins job.');
+        text(name: 'motion_master_version', defaultValue: '', description: 'Specify motion-master version from AWS S3 bucket synapticon-tools/motion-master/release/ to download. If left empty a binary will be copied from the motion-master Jenkins job.');
         text(name: 'motion_master_bridge_version', defaultValue: 'latest');
     }
     environment {
