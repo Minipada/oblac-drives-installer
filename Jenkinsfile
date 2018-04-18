@@ -1,10 +1,7 @@
 pipeline {
     agent any
     parameters {
-        text(name: 'bundle_version', description: 'See the list of <a href="https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json" target="_blank">released bundles</a>, or the list of <a href="https://s3.amazonaws.com/oblac-drives/index.html" target="_blank">built VMs</a>.');
-        text(name: 'oblac_drives_version', defaultValue: 'latest');
-        text(name: 'motion_master_version', defaultValue: '', description: 'Find the motion-master version in <a href="https://s3-eu-west-1.amazonaws.com/synapticon-tools/motion-master/release/index.html" target="_blank">directory listing</a>. If left empty a binary will be copied from the motion-master Jenkins job.');
-        text(name: 'motion_master_bridge_version', defaultValue: 'latest');
+        text(name: 'bundle_version', description: 'See the list of <a href="https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json" target="_blank">available bundles</a>. OBLAC Drives, Motion Master and Motion Master Bridge versions will be taken from dependencies property. Leave empty to build with the latest versions.');
     }
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')

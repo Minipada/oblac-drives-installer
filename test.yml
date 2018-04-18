@@ -5,30 +5,20 @@
 
   tasks:
 
-  - name: Sync firmwares
-    command: aws s3 sync s3://synapticon-tools/firmwares firmwares
-
 - hosts: vm
   user: ubuntu
   gather_facts: true
   vars:
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: ubuntu
-    ansible_ssh_pass: ubuntu
+    ansible_ssh_pass: nRMn52qGPXkAKBxNliJ8
     ansible_become: true
-    ansible_sudo_pass: ubuntu
+    ansible_sudo_pass: nRMn52qGPXkAKBxNliJ8
     ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
-    bundle_version: ''
+    bundle_version: 'v1.2.0'
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
 
-  tasks:
-
-   - name: Copy firmwares
-     copy:
-       src: firmwares
-       dest: /opt
-
   roles:
-    - oblac-drives
+    - test
