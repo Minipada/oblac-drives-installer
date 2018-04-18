@@ -1,14 +1,6 @@
 ---
-- stat: path=/usr/share/nginx/html/main.bundle.js
-  register: main_bundle
-
-- name: Replace bundleVersion in main.bundle.js
-  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main.bundle.js"
-  when: main_bundle.stat.exists == True
-
-- name: Replace bundleVersion in main.*.bundle.js
-  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main.*.bundle.js"
-  when: main_bundle.stat.exists == False
+- name: Replace bundle version in the running oblac-drives container
+  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main*.bundle.js"
 
 - name: Get odb.json from AWS S3 synapticon-tools/firmwares/odb.json
   uri:
