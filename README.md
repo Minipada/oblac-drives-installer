@@ -10,6 +10,43 @@ This project uses AWS EC2 to import, provision and export the prepared OBLAC Dri
 
 Once exported the image is still not ready to be used by end users. It has configuration that is not correct for the machine, for example it has one bridged network adapter instead of one NAT that is used for serving OBLAC Drives web application and the other bridged network adapter for EtherCAT communication. The purpose of [exports.sh](https://github.com/synapticon/oblac-drives-automation/blob/master/exports.sh) script is to download OBLAC Drives AWS EC2 exports, configure, rename and upload the prepared OBLAC Drives virtual machines for end users.
 
+## Releasing OBLAC Drives Bundle
+
+OBLAC Drives Bundle is a VM or Linux native installer script that runs predefined versions of OBLAC Drives, Motion Master and Motion Master Bridge.
+
+OBLAC Drives Bundle dependencies are defined in JSON file, e.g.:
+
+    [{
+      "version": "18.1",
+      "dependencies": {
+        "oblac-drives": "v1.2.0",
+        "motion-master": "motion-master-20180405-1842",
+        "motion-master-bridge": "v1.5.0"
+      },
+      "firmwares": ["v4.0.0-rc5", "v4.0.0-rc6"]
+    }, {
+      "version": "18.0",
+      "dependencies": {
+        "oblac-drives": "v1.1.0",
+        "motion-master": "motion-master-20180404-1342",
+        "motion-master-bridge": "v1.4.4"
+      },
+      "firmwares": ["v3.2.0-rc4", "v4.0.0-rc5"]
+    }]
+
+- **version**: uniquely identifies bundle, first two digits represent year, digit after period is a sequence number
+- **dependencies**: lists versions of tools that will be running on the target machine
+- **firmwares**: lists compatible firmwares, those that will be recommended in OBLAC Drives
+
+Do the following before running the [Jenkins job](https://ci2.synapticon.com/job/oblac-drives-automation/job/master/) that builds OBLAC Drives VM and Linux native installer:
+
+- Add new entry(bundle object) to [odb.json](https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json). Set bundle version, dependencies and compatible firmwares. You may change compatible firmwares at any time as you discover that older or newer releases of firmwares work with this bundle.
+- Use the version that you specified in bundle object as bundle_version parameter when running Jenkins job. During the build versions that are specified in dependencies object property will be used to start OBLAC Drives and Motion Master Bridge and to download Motion Master binary from AWS S3.
+- Ensure that there is a matching [OBLAC Drives image with tag](https://hub.docker.com/r/synapticon/oblac-drives/tags/) on Docker Hub. If not, go to [Jenkins](https://ci2.synapticon.com/job/oblac-drives/) and build OBLAC Drives image from Git tag.
+- Ensure that there is a matching [Motion Master Bridge image with tag](https://hub.docker.com/r/synapticon/motion-master-bridge/) on Docker Hub. If not, go to [Jenkins](https://ci2.synapticon.com/job/motion-master-bridge/) and build Motion Master Brdge image from Git tag.
+- Ensure that Motion Master version exists on AWS S3 synapticon-tools/motion-master/release.
+- You may specify empty bundle_version when running Jenkins job and in that case latest versions of OBLAC Drives and Motion Master Bridge will be started, Motion Master will be copied from the Motion Master Jenkins job as binary artifact.
+
 ## Examples of Using VMware OVF Tool Usage
 
 ### Convert a VMX to an OVA
