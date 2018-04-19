@@ -34,7 +34,7 @@ OBLAC Drives Bundle dependencies are defined in JSON file, e.g.:
       "firmwares": ["v3.2.0-rc4", "v4.0.0-rc5"]
     }]
 
-- **version**: uniquely identifies bundle
+- **version**: uniquely identifies bundle, first two digits represent year, digit after period is a sequence number
 - **dependencies**: lists versions of tools that will be running on the target machine
 - **firmwares**: lists compatible firmwares, those that will be recommended in OBLAC Drives
 
