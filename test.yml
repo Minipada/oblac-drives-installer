@@ -15,7 +15,7 @@
     ansible_become: true
     ansible_sudo_pass: nRMn52qGPXkAKBxNliJ8
     ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
-    bundle_version: 'v1.2.0'
+    bundle_version: '18.1'
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'

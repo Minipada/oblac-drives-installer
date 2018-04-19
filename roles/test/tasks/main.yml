@@ -1,6 +1,6 @@
 ---
-- name: Replace bundle version in the running oblac-drives container
-  shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main*.bundle.js"
+# - name: Replace bundle version in the running oblac-drives container
+#   shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main*.bundle.js"
 
 - name: Get odb.json from AWS S3 synapticon-tools/firmwares/odb.json
   uri:
@@ -20,6 +20,10 @@
   set_fact: bundles="{{ odb_response.json|json_query(\"[?version=='\" + bundle_version + \"']\")}}"
 
 - debug: msg={{ bundles[0] }}
+  when: bundles[0] is defined and (bundles[0]|length>0)
+
+- name: Copy bundle.json to /opt
+  copy: content={{ bundles[0] }} dest=/opt/bundle.json
   when: bundles[0] is defined and (bundles[0]|length>0)
 
 - name: Override oblac_drives_version, motion_master_version and motion_master_bridge_version parameters by dependencies in odb.json
