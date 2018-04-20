@@ -38,6 +38,10 @@ OBLAC Drives Bundle dependencies are defined in JSON file, e.g.:
 - **dependencies**: lists versions of tools that will be running on the target machine
 - **firmwares**: lists compatible firmwares, those that will be recommended in OBLAC Drives
 
+Copy odb.json to S3:
+
+    $ aws s3 cp odb.json s3://synapticon-tools/firmwares/odb.json --acl public-read
+
 Do the following before running the [Jenkins job](https://ci2.synapticon.com/job/oblac-drives-automation/job/master/) that builds OBLAC Drives VM and Linux native installer:
 
 - Add new entry(bundle object) to [odb.json](https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json). Set bundle version, dependencies and compatible firmwares. You may change compatible firmwares at any time as you discover that older or newer releases of firmwares work with this bundle.
