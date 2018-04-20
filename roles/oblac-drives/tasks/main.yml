@@ -129,7 +129,7 @@
     src: etc/udev/rules.d/99-EtherCAT.rules
     dest: /etc/udev/rules.d/
     owner: root
-    mode: 644
+    mode: 0644
 
 - name: Add ethercat binary to $PATH
   file:
@@ -239,7 +239,7 @@
   get_url:
     url: https://s3-eu-west-1.amazonaws.com/synapticon-tools/motion-master/release/motion-master-{{ motion_master_version }}
     dest: /opt/motion-master
-    mode: 755
+    mode: 0755
   when: motion_master_version != ''
 
 - name: Copy shell scripts
