@@ -20,7 +20,7 @@ OBLAC Drives Bundle dependencies are defined in JSON file, e.g.:
       "version": "18.1",
       "dependencies": {
         "oblac-drives": "v1.2.0",
-        "motion-master": "motion-master-20180405-1842",
+        "motion-master": "v1.6.3",
         "motion-master-bridge": "v1.5.0"
       },
       "firmwares": ["v4.0.0-rc5", "v4.0.0-rc6"]
@@ -28,7 +28,7 @@ OBLAC Drives Bundle dependencies are defined in JSON file, e.g.:
       "version": "18.0",
       "dependencies": {
         "oblac-drives": "v1.1.0",
-        "motion-master": "motion-master-20180404-1342",
+        "motion-master": "v1.6.2",
         "motion-master-bridge": "v1.4.4"
       },
       "firmwares": ["v3.2.0-rc4", "v4.0.0-rc5"]
