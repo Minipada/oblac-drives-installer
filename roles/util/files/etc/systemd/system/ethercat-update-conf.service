@@ -1,0 +1,10 @@
+[Unit]
+Description=Updates MASTER0_DEVICE MAC address in /etc/ethercat.conf
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/ethercat-update-conf.sh
+
+[Install]
+WantedBy=multi-user.target
