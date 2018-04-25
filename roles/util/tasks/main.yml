@@ -1,0 +1,64 @@
+---
+- name: Stop kernel messages from flooding console
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: 'kernel.printk = 3 4 1 3'
+
+- name: Copy ubuntu user binaries
+  copy:
+    src: "{{ item }}"
+    dest: /home/ubuntu/bin/
+    mode: 0755
+  with_fileglob:
+    - home/ubuntu/bin/*
+
+- name: Copy shell scripts
+  copy:
+    src: "{{ item }}"
+    dest: /opt/
+    owner: root
+    mode: 0755
+  with_fileglob:
+    - opt/*.sh
+
+- name: Copy somanet_cia402.sii
+  copy:
+    src: opt/somanet_cia402.sii
+    dest: /opt/
+    owner: root
+    mode: 0644
+
+- name: Copy systemd services
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - etc/systemd/system/*.service
+
+- name: Enable systemd services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - ethercat-update-conf.service
+    - ethercat.service
+    - ethercat-watchdog.service
+    - motion-master.service
+
+- name: Copy motd files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/update-motd.d/
+    owner: root
+    mode: 0755
+  with_fileglob:
+    - etc/update-motd.d/*
+
+- name: Copy profile.d ethercat slave script
+  copy:
+    src: etc/profile.d/ethercat-slave.sh
+    dest: /etc/profile.d/
+    owner: root
+    mode: 0644
