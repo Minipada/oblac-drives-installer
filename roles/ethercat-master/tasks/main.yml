@@ -6,19 +6,13 @@
   git:
     repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
     dest: /opt/Etherlab_EtherCAT_Master
+    version: develop
   when: etherlab.stat.exists == False
 
 - name: Install Etherlab_EtherCAT_Master
-  command: "{{ item }}"
-  with_items:
-    - "./bootstrap"
-    - "./configure --enable-sii-assign --disable-8139too --enable-hrtimer --enable-cycles"
-    - "make all modules"
-    - "make modules_install install"
-    - "ldconfig"
-    - "depmod"
+  command: ./install.sh {{ ethercat_interface }}
   args:
-    chdir: /opt/Etherlab_EtherCAT_Master
+    chdir: /opt/Etherlab_EtherCAT_Master/sncn_installer
   when: etherlab.stat.exists == False
 
 - name: Remove cloned Etherlab_EtherCAT_Master directory
@@ -27,15 +21,3 @@
     path: /opt/Etherlab_EtherCAT_Master
   when: etherlab.stat.exists == False
 
-- name: Copy EtherCAT udev rules
-  copy:
-    src: etc/udev/rules.d/99-EtherCAT.rules
-    dest: /etc/udev/rules.d/
-    owner: root
-    mode: 0644
-
-- name: Add ethercat binary to $PATH
-  file:
-    src: /opt/etherlab/bin/ethercat
-    dest: /usr/local/bin/ethercat
-    state: link
