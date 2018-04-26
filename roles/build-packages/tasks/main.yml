@@ -9,4 +9,3 @@
     - libtool
     - git
     - python3-pip
-    - python-jmespath

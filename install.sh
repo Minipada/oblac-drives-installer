@@ -13,4 +13,7 @@ if ! bash -c 'command -v ansible >/dev/null 2>&1'; then
     sudo apt-get install -y ansible
 fi
 
+# A workaround for the jmespath problem - must be installed before starting Ansible
+sudo apt-get install -y python-jmespath
+
 ansible-playbook -i "localhost," -c local native.yml --extra-vars "bundle_version=${1} ethercat_interface=${2}"
