@@ -3,6 +3,7 @@
   lineinfile:
     path: /etc/sysctl.conf
     line: 'kernel.printk = 3 4 1 3'
+  when: native is not defined
 
 - name: Copy ubuntu user binaries
   copy:
@@ -11,6 +12,7 @@
     mode: 0755
   with_fileglob:
     - home/ubuntu/bin/*
+  when: native is not defined
 
 - name: Copy shell scripts
   copy:
@@ -55,6 +57,7 @@
     mode: 0755
   with_fileglob:
     - etc/update-motd.d/*
+  when: native is not defined
 
 - name: Copy profile.d ethercat slave script
   copy:
