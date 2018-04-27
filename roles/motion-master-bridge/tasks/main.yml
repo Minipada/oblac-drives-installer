@@ -6,4 +6,4 @@
     pull: yes
     recreate: yes
     network_mode: host
-    restart_policy: always
+    restart_policy: unless-stopped
