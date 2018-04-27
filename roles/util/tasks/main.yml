@@ -16,6 +16,16 @@
   with_fileglob:
     - opt/oblac-drives/*.sh
 
+- name: Copy start/stop playbooks
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oblac-drives
+    owner: root
+    mode: 0755
+  with_items:
+    - opt/oblac-drives/start.yml
+    - opt/oblac-drives/stop.yml
+
 - name: Copy somanet_cia402.sii
   copy:
     src: opt/oblac-drives/somanet_cia402.sii

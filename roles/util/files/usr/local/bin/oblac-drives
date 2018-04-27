@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root"
+    echo "Usage: sudo oblac-drives [start|stop|restart|log]"
+    exit 1
+fi
+
+case "$1" in
+    'start')
+        echo "Starting OBLAC Drives bundle"
+        ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
+        echo "Please open the address \"localhost\" in a browser"
+        ;;
+    'stop')
+        echo "Stopping OBLAC Drives bundle"
+        ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml
+        ;;
+    'restart')
+        echo "Restarting OBLAC Drives bundle"
+        ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml
+        ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
+        ;;
+    'log')
+        tail -f -n1000 /var/log/syslog | grep --line-buffered motion-master
+        ;;
+    *)
+        echo "Usage: sudo oblac-drives [start|stop|restart|log]"
+        ;;
+esac
