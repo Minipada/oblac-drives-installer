@@ -19,6 +19,11 @@
       regexp: '^deb cdrom'
       state: absent
 
+  - name: Create the oblac-drives directory
+    file:
+      path: /opt/oblac-drives
+      state: directory
+
   roles:
     - dependencies
     - ethercat-master

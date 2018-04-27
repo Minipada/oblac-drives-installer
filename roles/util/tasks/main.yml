@@ -10,16 +10,16 @@
 - name: Copy shell scripts
   copy:
     src: "{{ item }}"
-    dest: /opt/
+    dest: /opt/oblac-drives
     owner: root
     mode: 0755
   with_fileglob:
-    - opt/*.sh
+    - opt/oblac-drives/*.sh
 
 - name: Copy somanet_cia402.sii
   copy:
-    src: opt/somanet_cia402.sii
-    dest: /opt/
+    src: opt/oblac-drives/somanet_cia402.sii
+    dest: /opt/oblac-drives/
     owner: root
     mode: 0644
 
