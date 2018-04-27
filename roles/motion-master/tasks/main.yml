@@ -1,9 +1,8 @@
 ---
-- name: Copy motion-master binary artifact from CI
-  copy:
-    src: opt/motion-master
-    dest: /opt/
-    owner: root
+- name: Download the latest motion-master binary from AWS S3 synapticon-tools/motion-master/release/
+  get_url:
+    url: https://s3-eu-west-1.amazonaws.com/synapticon-tools/motion-master/release/motion-master
+    dest: /opt/motion-master
     mode: 0755
   when: motion_master_version == ''
 
