@@ -1,6 +1,7 @@
 #! /bin/bash
 
-echo "****** OBLAC Drives installer ******"
+echo
+echo "********** OBLAC Drives bundle installer **********"
 echo
 
 if test "$#" -ne 2; then
