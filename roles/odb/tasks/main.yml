@@ -1,0 +1,31 @@
+---
+- name: Get odb.json from AWS S3 synapticon-tools/firmwares/odb.json
+  uri:
+    url: https://s3-eu-west-1.amazonaws.com/synapticon-tools/firmwares/odb.json
+    method: GET
+    return_content: yes
+    status_code: 200
+    headers:
+      Content-Type: application/json
+    body_format: json
+  register: odb_response
+
+- name: Copy odb.json to /opt
+  copy: content={{ odb_response.json }} dest=/opt/odb.json
+
+- name: Find bundle in odb.json by bundle_version parameter
+  set_fact: bundles="{{ odb_response.json|json_query(\"[?version=='\" + bundle_version + \"']\")}}"
+
+- debug: msg={{ bundles[0] }}
+  when: bundles[0] is defined and (bundles[0]|length>0)
+
+- name: Copy bundle.json to /opt
+  copy: content={{ bundles[0] }} dest=/opt/bundle.json
+  when: bundles[0] is defined and (bundles[0]|length>0)
+
+- name: Override oblac_drives_version, motion_master_version and motion_master_bridge_version parameters by dependencies in odb.json
+  set_fact:
+    oblac_drives_version: "{{ bundles[0].dependencies['oblac-drives'] }}"
+    motion_master_version: "{{ bundles[0].dependencies['motion-master'] }}"
+    motion_master_bridge_version: "{{ bundles[0].dependencies['motion-master-bridge'] }}"
+  when: bundles[0] is defined and (bundles[0]|length>0)

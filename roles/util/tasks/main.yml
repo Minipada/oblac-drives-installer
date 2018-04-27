@@ -1,0 +1,41 @@
+---
+- name: Copy binaries
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/"
+    mode: 0755
+  with_fileglob:
+    - usr/local/bin/*
+
+- name: Copy shell scripts
+  copy:
+    src: "{{ item }}"
+    dest: /opt/
+    owner: root
+    mode: 0755
+  with_fileglob:
+    - opt/*.sh
+
+- name: Copy somanet_cia402.sii
+  copy:
+    src: opt/somanet_cia402.sii
+    dest: /opt/
+    owner: root
+    mode: 0644
+
+- name: Copy systemd services
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - etc/systemd/system/*.service
+
+- name: Enable systemd services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - ethercat.service
+    - motion-master.service
