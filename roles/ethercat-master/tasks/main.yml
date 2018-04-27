@@ -1,5 +1,6 @@
 ---
-- stat: path=/bin/ethercat
+- stat:
+    path: /bin/ethercat
   register: ethercat
 
 - name: Git clone Etherlab_EtherCAT_Master

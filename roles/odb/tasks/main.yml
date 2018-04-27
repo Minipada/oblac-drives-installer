@@ -19,7 +19,8 @@
   set_fact:
     bundles: "{{ odb_response.json|json_query(\"[?version=='\" + bundle_version + \"']\")}}"
 
-- debug: msg={{ bundles[0] }}
+- debug:
+    msg: "{{ bundles[0] }}"
   when: bundles[0] is defined and (bundles[0]|length>0)
 
 - name: Copy bundle.json to /opt/oblac-drives

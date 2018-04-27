@@ -1,6 +1,8 @@
 ---
 - name: Install packages to allow apt to use a repository over HTTPS
-  apt: name="{{ item }}" update_cache=yes
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
   with_items:
     - apt-transport-https
     - ca-certificates
@@ -8,14 +10,16 @@
     - software-properties-common
 
 - name: Add Docker official GPG key
-  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
 
 - name: Add Docker APT repository
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu "{{ ansible_distribution_release }}" stable
 
 - name: Install Docker CE
-  apt: name=docker-ce
+  apt:
+    name: docker-ce
 
 - name: Add the current user to docker group
   user:
@@ -24,4 +28,5 @@
     append: yes
 
 - name: Pip install docker-py
-  pip: name=docker-py
+  pip:
+    name: docker-py
