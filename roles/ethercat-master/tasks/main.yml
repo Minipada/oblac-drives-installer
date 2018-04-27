@@ -1,24 +1,23 @@
 ---
-- stat:
-    path: /bin/ethercat
-  register: ethercat
+- command: which ethercat
+  register: ethercat_exists
+  ignore_errors: True
 
 - name: Git clone Etherlab_EtherCAT_Master
   git:
     repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
     dest: /opt/Etherlab_EtherCAT_Master
     version: develop
-  when: ethercat.stat.exists == False
+  when: ethercat_exists is failed
 
 - name: Install Etherlab_EtherCAT_Master
   command: ./install.sh {{ ethercat_interface }}
   args:
     chdir: /opt/Etherlab_EtherCAT_Master/sncn_installer
-  when: ethercat.stat.exists == False
+  when: ethercat_exists is failed
 
 - name: Remove cloned Etherlab_EtherCAT_Master directory
   file:
     state: absent
     path: /opt/Etherlab_EtherCAT_Master
-  when: ethercat.stat.exists == False
-
+  when: ethercat_exists is failed
