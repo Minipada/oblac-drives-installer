@@ -1,7 +1,11 @@
 #! /bin/bash
 
+echo "****** OBLAC Drives installer ******"
+echo
+
 if test "$#" -ne 2; then
     echo 'Usage: "./install.sh 18.2 eth0" (18.2 - OBLAC Drives bundle version; eth0 - EtherCAT network interface)'
+    echo 'Available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json'
     exit 1
 fi
 
