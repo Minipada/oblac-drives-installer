@@ -8,23 +8,33 @@ fi
 
 case "$1" in
     'start')
-        echo "Starting OBLAC Drives bundle"
+        echo
+        echo "Starting the OBLAC Drives bundle..."
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
-        echo "Please open the address \"localhost\" in a browser"
+        echo "OBLAC Drives bundle started. Please open the address \"localhost\" in a browser."
+        echo
         ;;
     'stop')
-        echo "Stopping OBLAC Drives bundle"
+        echo
+        echo "Stopping the OBLAC Drives bundle..."
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml
+        echo "OBLAC Drives bundle stopped."
+        echo
         ;;
     'restart')
-        echo "Restarting OBLAC Drives bundle"
+        echo
+        echo "Restarting the OBLAC Drives bundle"
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
+        echo "OBLAC Drives bundle restarted. Please open the address \"localhost\" in a browser."
+        echo
         ;;
     'log')
         tail -f -n1000 /var/log/syslog | grep --line-buffered motion-master
         ;;
     *)
+        echo
         echo "Usage: sudo oblac-drives [start|stop|restart|log]"
+        echo
         ;;
 esac
