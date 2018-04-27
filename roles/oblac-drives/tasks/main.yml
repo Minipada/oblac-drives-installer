@@ -1,5 +1,5 @@
 ---
-- name: Run oblac-drives container
+- name: Create the oblac-drives Docker container
   docker_container:
     name: oblac-drives
     image: synapticon/oblac-drives:{{ oblac_drives_version }}
