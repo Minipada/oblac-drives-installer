@@ -1,0 +1,17 @@
+---
+- name: Copy systemd services
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - etc/systemd/system/*.service
+
+- name: Enable systemd services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - ethercat.service
+    - motion-master.service
