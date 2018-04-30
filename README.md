@@ -4,12 +4,11 @@ This installer should be used for installing the OBLAC Drives bundle natively on
 
 ## Installation
 
-    $ ./install.sh 18.2 eth0
+    $ ./install.sh
     
-#### Parameters:
-
-- **18.2** - OBLAC Drive bundle version to be installed ([full list of available versions and supported firmwares](https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json))
-- **eth0** - the network inteface to be used for EtherCAT
+During the installation process, the user will need to enter the following:
+- OBLAC Drive bundle version to be installed (e.g **18.2** - [full list of available versions and supported firmwares](https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json))
+- The network inteface to be used for the EtherCAT master (e.g. **eth0, eth1, ens33...**)
 
 ## Usage
 
