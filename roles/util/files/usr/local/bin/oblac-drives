@@ -11,7 +11,7 @@ case "$1" in
         echo
         echo "Starting the OBLAC Drives bundle..."
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
-        echo "OBLAC Drives bundle started. Please open the address \"localhost\" in a browser."
+        echo "OBLAC Drives bundle started. Please open the address \"localhost:6789\" in a browser."
         echo
         ;;
     'stop')
@@ -26,7 +26,7 @@ case "$1" in
         echo "Restarting the OBLAC Drives bundle"
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml
-        echo "OBLAC Drives bundle restarted. Please open the address \"localhost\" in a browser."
+        echo "OBLAC Drives bundle restarted. Please open the address \"localhost:6789\" in a browser."
         echo
         ;;
     'log')

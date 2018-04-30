@@ -7,7 +7,7 @@
     recreate: yes
     restart_policy: unless-stopped
     published_ports:
-      - 80:80
+      - 6789:80
     volumes:
       - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
 

@@ -18,4 +18,4 @@ if ! bash -c 'dpkg -l python-jmespath >/dev/null 2>&1'; then
 fi
 
 ansible-playbook -i "localhost," -c local native.yml && \
-echo "Installation successfully finished. Please open the address \"localhost\" in a browser."
+echo "Installation successfully finished. Please open the address \"localhost:6789\" in a browser."
