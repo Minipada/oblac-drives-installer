@@ -12,6 +12,16 @@
     motion_master_bridge_version: 'latest'
     ethercat_interface: 'eth0'
 
+  vars_prompt:
+  - name: "bundle_version"
+    prompt: "Please enter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)"
+    private: no
+  
+  - name: "ethercat_interface"
+    prompt: "Please enter the network interface used for the EtherCAT master (e.g. eth0, eth1, ens33...)"
+    default: "eth0"
+    private: no
+
   pre_tasks:
   - name: Remove cdrom sources from /etc/apt/sources.list
     lineinfile:
