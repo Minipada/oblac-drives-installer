@@ -22,5 +22,5 @@
 
 IP_ADDRESS=$(ip addr show ens32 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 
-printf "Open \033[48;5;020mhttp://${IP_ADDRESS}\033[0m in your host browser to start the application"
+printf "Open \033[48;5;020mhttp://${IP_ADDRESS}\033[0m in your web browser to start the application"
 printf "\n\n"
