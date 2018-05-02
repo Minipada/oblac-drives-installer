@@ -11,6 +11,7 @@
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
     ethercat_interface: 'eth0'
+    required_docker_version: '17.05.0'
 
   vars_prompt:
   - name: "bundle_version"
