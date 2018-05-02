@@ -1,6 +1,6 @@
-# OBLAC Drives bundle native installer
+# OBLAC Drives Native Installer
 
-This installer should be used for installing the OBLAC Drives bundle natively on **Ubuntu systems** with kernel versions up to and including **4.9**.
+This installer should be used for installing the OBLAC Drives and related services natively on **Ubuntu systems** with kernel versions up to and including **4.9**.
 
 ## Installation
 
