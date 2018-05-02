@@ -14,11 +14,11 @@
 
   vars_prompt:
   - name: "bundle_version"
-    prompt: "Please enter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)"
+    prompt: "\e[1;33mPlease enter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)\e[0m"
     private: no
   
   - name: "ethercat_interface"
-    prompt: "Please enter the network interface used for the EtherCAT master (e.g. eth0, eth1, ens33...)"
+    prompt: "\e[1;33mPlease enter the network interface used for the EtherCAT master (e.g. eth0, eth1, ens33...)\e[0m"
     default: "eth0"
     private: no
 
