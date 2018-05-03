@@ -1,12 +1,18 @@
 ---
-- name: Copy systemd services
+- name: Copy the ethercat.service systemd file
   copy:
-    src: "{{ item }}"
+    src: etc/systemd/system/ethercat.service
     dest: /etc/systemd/system/
     owner: root
     mode: 0644
-  with_fileglob:
-    - etc/systemd/system/*.service
+    force: no
+
+- name: Copy the motion-master.service systemd file
+  copy:
+    src: etc/systemd/system/motion-master.service
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
 
 - name: Start services after installation, but disable automatic start on boot
   systemd:
