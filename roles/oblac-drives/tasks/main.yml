@@ -23,6 +23,10 @@
     group: root
     mode: 0644
 
+- name: set timezone to UTC
+  timezone:
+    name: Etc/UTC
+
 - name: Stop kernel messages from flooding console
   lineinfile:
     path: /etc/sysctl.conf
