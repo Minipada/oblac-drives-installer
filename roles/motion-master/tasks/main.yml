@@ -4,6 +4,7 @@
     url: https://s3-eu-west-1.amazonaws.com/synapticon-tools/motion-master/release/motion-master
     dest: /opt/oblac-drives/motion-master
     mode: 0755
+    force: yes
   when: motion_master_version == ''
 
 - name: Download motion-master binary from AWS S3 synapticon-tools/motion-master/release/
@@ -11,4 +12,5 @@
     url: https://s3-eu-west-1.amazonaws.com/synapticon-tools/motion-master/release/motion-master-{{ motion_master_version }}
     dest: /opt/oblac-drives/motion-master
     mode: 0755
+    force: yes
   when: motion_master_version != ''
