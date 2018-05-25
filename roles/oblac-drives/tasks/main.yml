@@ -91,6 +91,12 @@
     name: systemd-networkd
     enabled: yes
 
+- name: Install/update the open-vm-tools
+  apt:
+    name: open-vm-tools
+    update_cache: yes
+    state: latest
+
 - name: Install build packages
   apt: name="{{ item }}" update_cache=yes
   with_items:
