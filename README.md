@@ -96,7 +96,7 @@ To convert a VMX to an OVA file, type a command like the following:
 
 ## Set firmwares bucket CORS
 
-    $ aws s3api put-bucket-cors --bucket synapticon-tools/firmwares --cors-configuration file://cors.json
+    $ aws s3api put-bucket-cors --bucket "synapticon-tools" --cors-configuration file://cors.json
 
 ## Resources
 
