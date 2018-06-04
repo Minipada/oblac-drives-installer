@@ -2,7 +2,7 @@
   "version": "18.5",
   "dependencies": {
     "oblac-drives": "v1.6.4",
-    "motion-master": "v1.8.2",
+    "motion-master": "v1.8.3",
     "motion-master-bridge": "v1.5.0"
   },
   "firmwares": ["v4.0.0-rc8"]
