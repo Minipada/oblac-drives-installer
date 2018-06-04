@@ -1,7 +1,7 @@
 [{
   "version": "18.5",
   "dependencies": {
-    "oblac-drives": "v1.6.3",
+    "oblac-drives": "v1.6.4",
     "motion-master": "v1.8.2",
     "motion-master-bridge": "v1.5.0"
   },
