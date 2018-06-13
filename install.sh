@@ -13,7 +13,9 @@ if ! bash -c 'command -v ansible >/dev/null 2>&1'; then
 
     rc=$?;
     if [[ $rc != 0 ]]; then
+        echo
         echo 'Failed to install Ansible. Please run "sudo apt-get update" and check for any errors. Once the errors are resolved, try installing again.';
+        echo
         exit $rc;
     fi
 fi
