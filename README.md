@@ -12,7 +12,7 @@ There are **two different** installation options:
     
 2) After cloning this repository:
 
-        $ ./install.sh
+        $ sudo ./install.sh
     
 During the installation process, the user will need to enter the following:
 - OBLAC Drive bundle version to be installed (e.g **18.2** - [full list of available versions and supported firmwares](https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json))
