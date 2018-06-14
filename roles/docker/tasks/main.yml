@@ -38,12 +38,19 @@
   apt:
     name: docker-ce
     state: latest
+  register: docker_ce_update
   when: docker_info.stdout is version_compare(required_docker_version,'<')
 
 - name: Install docker.io
   apt:
     name: docker.io
   when: (docker_ce_install.failed is defined) and docker_ce_install.failed
+
+- name: Update docker.io
+  apt:
+    name: docker.io
+    state: latest
+  when: (docker_ce_update.failed is defined) and docker_ce_update.failed
 
 - name: Add the current user to docker group
   user:
