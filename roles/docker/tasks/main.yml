@@ -39,7 +39,10 @@
     name: docker-ce
     state: latest
   register: docker_ce_update
-  when: docker_info.stdout is version_compare(required_docker_version,'<')
+  when:
+    - docker_ce_install is not defined
+    - docker_info.stdout is defined
+    - docker_info.stdout is version_compare(required_docker_version,'<')
 
 - name: Install docker.io
   apt:
