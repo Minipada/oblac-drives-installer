@@ -30,9 +30,15 @@
 - name: Install Docker CE
   apt:
     name: docker-ce
-  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  when: docker_info.failed
   register: docker_ce_install
   ignore_errors: yes
+
+- name: Update Docker CE
+  apt:
+    name: docker-ce
+    state: latest
+  when: docker_info.stdout is version_compare(required_docker_version,'<')
 
 - name: Install docker.io
   apt:
