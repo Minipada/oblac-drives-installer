@@ -31,6 +31,13 @@
   apt:
     name: docker-ce
   when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  register: docker_ce_install
+  ignore_errors: yes
+
+- name: Install docker.io
+  apt:
+    name: docker.io
+  when: docker_ce_install.failed
 
 - name: Add the current user to docker group
   user:
