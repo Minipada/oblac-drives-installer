@@ -15,17 +15,17 @@
     - ca-certificates
     - curl
     - software-properties-common
-  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
 - name: Add Docker official GPG key
   apt_key:
     url: "https://download.docker.com/linux/ubuntu/gpg"
-  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
 - name: Add Docker APT repository
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu "{{ ansible_distribution_release }}" stable
-  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
 - name: Install Docker CE
   apt:
@@ -44,7 +44,7 @@
     name: "{{ ansible_user_id }}"
     groups: docker
     append: yes
-  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<='))
+  when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
 - name: Pip install docker-py
   pip:
