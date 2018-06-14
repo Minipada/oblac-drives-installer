@@ -43,7 +43,7 @@
 - name: Install docker.io
   apt:
     name: docker.io
-  when: docker_ce_install.failed
+  when: (docker_ce_install.failed is defined) and docker_ce_install.failed
 
 - name: Add the current user to docker group
   user:
