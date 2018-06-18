@@ -5,7 +5,7 @@
     "motion-master": "v1.8.3",
     "motion-master-bridge": "v1.5.0"
   },
-  "firmwares": ["v4.0.0-rc8"]
+  "firmwares": ["v4.0.0-rc8", "v4.0.0-rc9", "v4.0.0-rc10", "v4.0.0-rc11"]
 }, {
   "version": "18.4",
   "dependencies": {
