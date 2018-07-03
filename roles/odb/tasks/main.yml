@@ -10,17 +10,23 @@
     body_format: json
   register: odb_response
 
-- name: Copy odb.json to /opt
-  copy: content={{ odb_response.json }} dest=/opt/odb.json
+- name: Copy odb.json to /opt/oblac-drives
+  copy:
+    content: "{{ odb_response.json }}"
+    dest: /opt/oblac-drives/odb.json
 
 - name: Find bundle in odb.json by bundle_version parameter
-  set_fact: bundles="{{ odb_response.json|json_query(\"[?version=='\" + bundle_version + \"']\")}}"
+  set_fact:
+    bundles: "{{ odb_response.json|json_query(\"[?version=='\" + bundle_version + \"']\")}}"
 
-- debug: msg={{ bundles[0] }}
+- debug:
+    msg: "{{ bundles[0] }}"
   when: bundles[0] is defined and (bundles[0]|length>0)
 
-- name: Copy bundle.json to /opt
-  copy: content={{ bundles[0] }} dest=/opt/bundle.json
+- name: Copy bundle.json to /opt/oblac-drives
+  copy:
+    content: "{{ bundles[0] }}"
+    dest: /opt/oblac-drives/bundle.json
   when: bundles[0] is defined and (bundles[0]|length>0)
 
 - name: Override oblac_drives_version, motion_master_version and motion_master_bridge_version parameters by dependencies in odb.json

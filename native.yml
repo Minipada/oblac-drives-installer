@@ -3,30 +3,46 @@
   connection: local
   gather_facts: true
   become: yes
+
   vars:
     ansible_python_interpreter: /usr/bin/python3
-    ansible_ssh_extra_args: '-o StrictHostKeyChecking=no'
     bundle_version: ''
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
     ethercat_interface: 'eth0'
     native: true
+    required_docker_version: '17.05.0'
+
+  vars_prompt:
+  - name: "bundle_version"
+    prompt: "\e[1;33mPlease enter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)\e[0m"
+    private: no
+  
+  - name: "ethercat_interface"
+    prompt: "\e[1;33mPlease enter the network interface used for the EtherCAT master (e.g. eth0, eth1, ens33...)\e[0m"
+    default: "eth0"
+    private: no
 
   pre_tasks:
-
   - name: Remove cdrom sources from /etc/apt/sources.list
     lineinfile:
       path: /etc/apt/sources.list
       regexp: '^deb cdrom'
       state: absent
 
+  - name: Create the oblac-drives directory
+    file:
+      path: /opt/oblac-drives
+      state: directory
+
   roles:
-    - build-packages
+    - dependencies
     - ethercat-master
     - odb
     - docker
     - motion-master-bridge
     - oblac-drives
     - motion-master
+    - services
     - util

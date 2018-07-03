@@ -1,23 +1,52 @@
 ---
+<<<<<<< HEAD
 - stat: path=/bin/ethercat
   register: ethercat
 
+=======
+- stat:
+    path: /bin/ethercat 
+  register: ethercat
+
+- stat:
+    path: /opt/etherlab 
+  register: etherlab
+
+>>>>>>> oblac-drives-native-installer/master
 - name: Git clone Etherlab_EtherCAT_Master
   git:
     repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
     dest: /opt/Etherlab_EtherCAT_Master
     version: develop
+<<<<<<< HEAD
   when: ethercat.stat.exists == False
+=======
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+>>>>>>> oblac-drives-native-installer/master
 
 - name: Install Etherlab_EtherCAT_Master
   command: ./install.sh {{ ethercat_interface }}
   args:
     chdir: /opt/Etherlab_EtherCAT_Master/sncn_installer
+<<<<<<< HEAD
   when: ethercat.stat.exists == False
+=======
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+>>>>>>> oblac-drives-native-installer/master
 
 - name: Remove cloned Etherlab_EtherCAT_Master directory
   file:
     state: absent
     path: /opt/Etherlab_EtherCAT_Master
+<<<<<<< HEAD
   when: ethercat.stat.exists == False
 
+=======
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+>>>>>>> oblac-drives-native-installer/master

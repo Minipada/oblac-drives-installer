@@ -1,5 +1,5 @@
 ---
-- name: Run oblac-drives container
+- name: Create the oblac-drives Docker container
   docker_container:
     name: oblac-drives
     image: synapticon/oblac-drives:{{ oblac_drives_version }}
@@ -9,7 +9,21 @@
     published_ports:
       - 80:80
     volumes:
-      - /opt/firmwares:/usr/share/nginx/html/firmwares:ro
+      - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
+  when: native is not defined
+
+- name: Create the oblac-drives Docker container
+  docker_container:
+    name: oblac-drives
+    image: synapticon/oblac-drives:{{ oblac_drives_version }}
+    pull: yes
+    recreate: yes
+    restart_policy: unless-stopped
+    published_ports:
+      - 6789:80
+    volumes:
+      - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
+  when: native
 
 - name: Replace bundle version in the running oblac-drives container
   shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main*.bundle.js"
