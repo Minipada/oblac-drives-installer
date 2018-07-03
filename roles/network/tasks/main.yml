@@ -1,0 +1,33 @@
+---
+- name: Set synapticon as host name for loopback interface
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127.0.1.1'
+    line: '127.0.1.1	synapticon'
+
+- name: Replace /etc/hostname
+  copy:
+    src: etc/hostname
+    dest: /etc/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable networking service
+  systemd:
+    name: networking
+    enabled: no
+
+- name: Copy systemd network files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/network/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - etc/systemd/network/*
+
+- name: Enable systemd-networkd service
+  systemd:
+    name: systemd-networkd
+    enabled: yes

@@ -1,0 +1,9 @@
+---
+- name: Create the motion-master-bridge Docker container
+  docker_container:
+    name: motion-master-bridge
+    image: synapticon/motion-master-bridge:{{ motion_master_bridge_version }}
+    pull: yes
+    recreate: yes
+    network_mode: host
+    restart_policy: always

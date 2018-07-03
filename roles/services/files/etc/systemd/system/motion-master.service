@@ -3,7 +3,7 @@ Description=Controls EtherCAT drives and communicates with external services ove
 After=ethercat.service
 
 [Service]
-ExecStart=/opt/motion-master
+ExecStart=/opt/oblac-drives/motion-master
 Restart=always
 RestartSec=2
 StandardOutput=syslog

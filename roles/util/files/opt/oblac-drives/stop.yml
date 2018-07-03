@@ -1,0 +1,31 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: false
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+  - name: Stop the motion-master-bridge container
+    docker_container:
+      name: motion-master-bridge
+      image: synapticon/motion-master-bridge
+      network_mode: host
+      restart_policy: unless-stopped
+      state: stopped
+
+  - name: Stop the oblac-drives container
+    docker_container:
+      name: oblac-drives
+      image: synapticon/oblac-drives
+      restart_policy: unless-stopped
+      state: stopped
+
+  - name: Stop services
+    systemd:
+      name: "{{ item }}"
+      state: stopped
+    with_items:
+      - motion-master.service
+      - ethercat.service

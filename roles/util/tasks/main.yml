@@ -1,0 +1,59 @@
+---
+- name: Stop kernel messages from flooding console
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: 'kernel.printk = 3 4 1 3'
+  when: native is not defined
+
+- name: Copy binaries
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/local/bin/"
+    mode: 0755
+  with_fileglob:
+    - usr/local/bin/*
+
+- name: Copy shell scripts
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oblac-drives
+    owner: root
+    mode: 0755
+  with_fileglob:
+    - opt/oblac-drives/*.sh
+
+- name: Copy motd files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/update-motd.d/
+    owner: root
+    mode: 0755
+  with_fileglob:
+    - etc/update-motd.d/*
+  when: native is not defined
+
+- name: Copy profile.d ethercat slave script
+  copy:
+    src: etc/profile.d/ethercat-slave.sh
+    dest: /etc/profile.d/
+    owner: root
+    mode: 0644
+  when: native is not defined
+
+- name: Copy start/stop playbooks
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oblac-drives
+    owner: root
+    mode: 0755
+  with_items:
+    - opt/oblac-drives/start.yml
+    - opt/oblac-drives/stop.yml
+
+- name: Copy somanet_cia402.sii
+  copy:
+    src: opt/oblac-drives/somanet_cia402.sii
+    dest: /opt/oblac-drives/
+    owner: root
+    mode: 0644
+
