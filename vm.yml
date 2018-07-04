@@ -3,6 +3,11 @@
   connection: local
   gather_facts: false
 
+  tasks:
+
+  - name: Sync firmwares
+    command: aws s3 sync s3://synapticon-tools/firmwares firmwares
+
 - hosts: vm
   user: ubuntu
   gather_facts: true
@@ -32,9 +37,6 @@
     file:
       path: /opt/oblac-drives
       state: directory
-
-  - name: Sync firmwares
-    command: aws s3 sync s3://synapticon-tools/firmwares firmwares
 
   - name: Copy firmwares
     copy:
