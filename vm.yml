@@ -60,4 +60,5 @@
     - motion-master
     - services
     - util
+    - ansible
     - clean-up

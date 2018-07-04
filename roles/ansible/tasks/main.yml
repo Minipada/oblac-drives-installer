@@ -1,0 +1,14 @@
+---
+- name: Install Ansible dependencies
+  apt:
+    name: software-properties-common
+    update_cache: yes
+
+- name: Add Ansible repository
+  apt_repository:
+    repo: ppa:ansible/ansible
+
+- name: Install Ansible
+  apt:
+    name: ansible
+    update_cache: yes
