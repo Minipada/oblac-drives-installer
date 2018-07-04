@@ -20,7 +20,7 @@
 #    with this program; if not, write to the Free Software Foundation, Inc.,
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-IP_ADDRESS=$(ip addr show ens32 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+IP_ADDRESS=$(ip addr show ens32 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1 | head -n 1)
 
 printf "Open \033[48;5;020mhttp://${IP_ADDRESS}\033[0m in your web browser to start the application"
 printf "\n\n"
