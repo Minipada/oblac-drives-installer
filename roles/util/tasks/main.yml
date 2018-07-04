@@ -40,15 +40,29 @@
     mode: 0644
   when: native is not defined
 
-- name: Copy start/stop playbooks
+- name: Copy VM start/stop playbooks
   copy:
     src: "{{ item }}"
     dest: /opt/oblac-drives
     owner: root
     mode: 0755
   with_items:
-    - opt/oblac-drives/start.yml
-    - opt/oblac-drives/stop.yml
+    - opt/oblac-drives/playbooks/vm/start.yml
+    - opt/oblac-drives/playbooks/vm/stop.yml
+  when: native is not defined
+
+- name: Copy native start/stop playbooks
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oblac-drives
+    owner: root
+    mode: 0755
+  with_items:
+    - opt/oblac-drives/playbooks/native/start.yml
+    - opt/oblac-drives/playbooks/native/stop.yml
+  when:
+    - native is defined
+    - native is true
 
 - name: Copy somanet_cia402.sii
   copy:
