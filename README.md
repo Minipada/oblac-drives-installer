@@ -8,7 +8,7 @@ There are **three different** installation options:
 
 1) Without cloning this repository:
 
-        $ sudo bash -c "$(wget -qO - https://raw.githubusercontent.com/synapticon/oblac-drives-native-installer/master/oblac-drives-native-installer.sh)"
+        $ sudo bash -c "$(wget -qO - https://raw.githubusercontent.com/synapticon/oblac-drives-installer/master/oblac-drives-native-installer.sh)"
     
 2) After cloning this repository:
 
