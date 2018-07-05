@@ -9,6 +9,7 @@
     - libtool
     - git
     - python3-pip
+    - python-jmespath
 
 - name: Install/update the open-vm-tools
   apt:

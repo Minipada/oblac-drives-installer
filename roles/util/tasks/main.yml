@@ -64,6 +64,13 @@
     - native is defined
     - native is true
 
+- name: Copy update playbook
+  copy:
+    src: opt/oblac-drives/playbooks/update.yml
+    dest: /opt/oblac-drives
+    owner: root
+    mode: 0755
+
 - name: Copy somanet_cia402.sii
   copy:
     src: opt/oblac-drives/somanet_cia402.sii
