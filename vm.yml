@@ -33,6 +33,10 @@
       regexp: '^deb cdrom'
       state: absent
 
+  - name: set timezone to UTC
+    timezone:
+      name: Etc/UTC
+
   - name: Create the oblac-drives directory
     file:
       path: /opt/oblac-drives
@@ -42,10 +46,6 @@
     copy:
       src: firmwares
       dest: /opt/oblac-drives
-
-  - name: set timezone to UTC
-    timezone:
-      name: Etc/UTC
 
   roles:
     - ubuntu-user
