@@ -41,6 +41,7 @@ case "$1" in
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/update.yml --extra-vars "bundle_version=${2}" && \
         echo "OBLAC Drives successfully updated."
         echo
+        ;;
     'log')
         tail -f -n1000 /var/log/syslog | grep --line-buffered motion-master
         ;;
