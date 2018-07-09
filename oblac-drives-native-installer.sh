@@ -46,11 +46,11 @@ printf "\e[0m"
 
 ########## Download the installtion script ##########
 
-WORK_DIR=/tmp/oblac-drives-native-installer/
+WORK_DIR=/tmp/oblac-drives-installer/
 
 git --version >/dev/null 2>&1 || sudo apt-get install -y git
 stat $WORK_DIR >/dev/null 2>&1 && rm -rf $WORK_DIR
-git clone https://github.com/synapticon/oblac-drives-native-installer.git $WORK_DIR && \
+git clone https://github.com/synapticon/oblac-drives-installer.git $WORK_DIR && \
 cd $WORK_DIR
 
 ########## Installation ##########
