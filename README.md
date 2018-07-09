@@ -50,7 +50,7 @@ OBLAC Drives and the related software like EtherCAT Master, Motion Master and Mo
 
 This project uses AWS EC2 to import, provision and export the prepared OBLAC Drives virtual machine. It starts off from the clean Ubuntu Server 16.04.3 LTS machine that is already hosted on AWS S3, it runs the Ansible playbook against the imported machine and then requests a create instance export task on AWS EC2. The process of import, provision and export can take up to 2 hours. The most time is consumed by clean-up and AWS EC2 export tasks.
 
-Once exported the image is still not ready to be used by end users. It has configuration that is not correct for the machine, for example it has one bridged network adapter instead of one NAT that is used for serving OBLAC Drives web application and the other bridged network adapter for EtherCAT communication. The purpose of [exports.sh](https://github.com/synapticon/oblac-drives-automation/blob/master/exports.sh) script is to download OBLAC Drives AWS EC2 exports, configure, rename and upload the prepared OBLAC Drives virtual machines for end users.
+Once exported the image is still not ready to be used by end users. It has configuration that is not correct for the machine, for example it has one bridged network adapter instead of one NAT that is used for serving OBLAC Drives web application and the other bridged network adapter for EtherCAT communication. The purpose of [exports.sh](https://github.com/synapticon/oblac-drives-installer/blob/master/exports.sh) script is to download OBLAC Drives AWS EC2 exports, configure, rename and upload the prepared OBLAC Drives virtual machines for end users.
 
 ## Releasing OBLAC Drives Bundle
 
