@@ -23,18 +23,30 @@ case "$1" in
         ;;
     'restart')
         echo
-        echo "Restarting the OBLAC Drives bundle"
+        echo "Restarting the OBLAC Drives bundle..."
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/stop.yml && \
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/start.yml && \
         echo "OBLAC Drives bundle restarted."
         echo
         ;;
+    'update')
+        echo
+
+        if [[ $# -ne 2 ]]; then
+            echo "Usage: sudo oblac-drives update 18.5";
+            exit -1;
+        fi
+
+        echo "Updating the OBLAC Drives bundle. Please make sure that OBLAC Drives is currently running."
+        ansible-playbook -i "localhost," -c local /opt/oblac-drives/update.yml --extra-vars "bundle_version=${2}" && \
+        echo "OBLAC Drives successfully updated."
+        echo
     'log')
         tail -f -n1000 /var/log/syslog | grep --line-buffered motion-master
         ;;
     *)
         echo
-        echo "Usage: sudo oblac-drives [start|stop|restart|log]"
+        echo "Usage: sudo oblac-drives [start|stop|restart|update|log]"
         echo
         ;;
 esac
