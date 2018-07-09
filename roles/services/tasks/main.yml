@@ -51,4 +51,4 @@
     - motion-master.service
   when:
     - native is defined
-    - native is true
+    - native

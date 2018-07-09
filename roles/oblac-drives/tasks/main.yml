@@ -25,7 +25,7 @@
       - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
   when:
     - native is defined
-    - native is true
+    - native
 
 - name: Replace bundle version in the running oblac-drives container
   shell: docker exec oblac-drives sh -c "sed -i -e 's/bundleVersion:\"\"/bundleVersion:\"{{ bundle_version }}\"/' /usr/share/nginx/html/main*.bundle.js"

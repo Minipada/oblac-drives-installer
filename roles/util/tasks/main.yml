@@ -62,7 +62,7 @@
     - opt/oblac-drives/playbooks/native/stop.yml
   when:
     - native is defined
-    - native is true
+    - native
 
 - name: Copy update playbook
   copy:
