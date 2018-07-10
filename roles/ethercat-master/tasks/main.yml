@@ -17,7 +17,10 @@
     - not etherlab.stat.exists
 
 - name: Create gitlog.h for the EtherCAT master installation
-  command: echo -n "char* gitlog = \"" > master/gitlog.h && git log | head -1 | awk '{printf "%s", substr($2,1,8)}' >> master/gitlog.h && echo "\";" >> master/gitlog.h
+  shell: |
+    echo -n "char* gitlog = \"" > master/gitlog.h
+    git log | head -1 | awk '{printf "%s", substr($2,1,8)}' >> master/gitlog.h
+    echo "\";" >> master/gitlog.h
   args:
     chdir: /opt/Etherlab_EtherCAT_Master
   when:
