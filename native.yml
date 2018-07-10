@@ -38,7 +38,7 @@
 
   roles:
     - dependencies
-    - ethercat-master
+    - ethercat-master-sncn-installer
     - odb
     - docker
     - motion-master-bridge

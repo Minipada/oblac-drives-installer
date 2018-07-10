@@ -16,10 +16,25 @@
     - not ethercat.stat.exists
     - not etherlab.stat.exists
 
-- name: Install Etherlab_EtherCAT_Master
-  command: ./install.sh {{ ethercat_interface }}
+- name: Create gitlog.h for the EtherCAT master installation
+  command: echo -n "char* gitlog = \"" > master/gitlog.h && git log | head -1 | awk '{printf "%s", substr($2,1,8)}' >> master/gitlog.h && echo "\";" >> master/gitlog.h
   args:
-    chdir: /opt/Etherlab_EtherCAT_Master/sncn_installer
+    chdir: /opt/Etherlab_EtherCAT_Master
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+
+- name: Install Etherlab_EtherCAT_Master
+  command: "{{ item }}"
+  with_items:
+    - "./bootstrap"
+    - "./configure --enable-sii-assign --disable-8139too --enable-hrtimer --enable-cycles"
+    - "make all modules"
+    - "make modules_install install"
+    - "ldconfig"
+    - "depmod"
+  args:
+    chdir: /opt/Etherlab_EtherCAT_Master
   when:
     - not ethercat.stat.exists
     - not etherlab.stat.exists
@@ -28,6 +43,25 @@
   file:
     state: absent
     path: /opt/Etherlab_EtherCAT_Master
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+
+- name: Copy EtherCAT udev rules
+  copy:
+    src: etc/udev/rules.d/99-EtherCAT.rules
+    dest: /etc/udev/rules.d/
+    owner: root
+    mode: 0644
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+
+- name: Add ethercat binary to $PATH
+  file:
+    src: /opt/etherlab/bin/ethercat
+    dest: /usr/local/bin/ethercat
+    state: link
   when:
     - not ethercat.stat.exists
     - not etherlab.stat.exists
