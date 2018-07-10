@@ -4,6 +4,11 @@
     name: software-properties-common
     update_cache: yes
 
+- name: Add an apt key by id from a keyserver
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 93C4A3FD7BB9C367
+
 - name: Add Ansible repository
   apt_repository:
     repo: ppa:ansible/ansible
