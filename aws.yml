@@ -68,15 +68,43 @@
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
 
-  tasks:
+  pre_tasks:
 
-   - name: Copy firmwares
-     copy:
-       src: firmwares
-       dest: /opt
+  - name: Remove cdrom sources from /etc/apt/sources.list
+    lineinfile:
+      path: /etc/apt/sources.list
+      regexp: '^deb cdrom'
+      state: absent
+
+  - name: set timezone to UTC
+    timezone:
+      name: Etc/UTC
+
+  - name: Create the oblac-drives directory
+    file:
+      path: /opt/oblac-drives
+      state: directory
+
+  - name: Copy firmwares
+    copy:
+      src: firmwares
+      dest: /opt/oblac-drives
 
   roles:
+    - ubuntu-user
+    - network
+    - grub
+    - dependencies
+    - ethercat-master
+    - odb
+    - docker
+    - motion-master-bridge
     - oblac-drives
+    - motion-master
+    - services
+    - util
+    - ansible
+    - clean-up
 
 - hosts: localhost
   connection: local
