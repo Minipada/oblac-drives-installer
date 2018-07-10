@@ -67,6 +67,8 @@
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
+    ethercat_interface: 'ens33'
+    required_docker_version: '17.05.0'
 
   pre_tasks:
 
