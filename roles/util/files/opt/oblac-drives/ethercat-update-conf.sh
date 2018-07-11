@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 # Default interface used inside the OBLAC Drives VM
 INTERFACE="ens33"
 
 # If available, use the interface provided as the script argument
-if [[ $# -eq 1 ]]; then
+if [ "$#" -eq 1 ]; then
     INTERFACE=${1}
 fi
 
