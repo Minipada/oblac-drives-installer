@@ -69,6 +69,7 @@
     - not ethercat.stat.exists
     - not etherlab.stat.exists
 
+#################### Services ####################
 - name: Copy the ethercat.service systemd file
   copy:
     src: etc/systemd/system/ethercat.service
@@ -77,34 +78,10 @@
     mode: 0644
     force: no
 
-- name: Copy the ethercat-update-conf.service systemd file
-  copy:
-    src: etc/systemd/system/ethercat-update-conf.service
-    dest: /etc/systemd/system/
-    owner: root
-    mode: 0644
-  when: native is not defined
-
-- name: Copy the ethercat-watchdog.service systemd file
-  copy:
-    src: etc/systemd/system/ethercat-watchdog.service
-    dest: /etc/systemd/system/
-    owner: root
-    mode: 0644
-  when: native is not defined
-
 - name: Enable EtherCAT systemd service
   systemd:
     name: ethercat.service
     enabled: yes
-
-- name: Enable utility EtherCAT systemd services
-  systemd:
-    name: "{{ item }}"
-    enabled: yes
-  with_items:
-    - ethercat-update-conf.service
-    - ethercat-watchdog.service
   when: native is not defined
 
 - name: Start ethercat.service after installation, but disable automatic start on boot
@@ -115,3 +92,23 @@
   when:
     - native is defined
     - native
+
+- name: Copy the utility EtherCAT systemd files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_items:
+    - ethercat-update-conf.service
+    - ethercat-watchdog.service
+  when: native is not defined
+
+- name: Enable utility EtherCAT systemd services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - ethercat-update-conf.service
+    - ethercat-watchdog.service
+  when: native is not defined
