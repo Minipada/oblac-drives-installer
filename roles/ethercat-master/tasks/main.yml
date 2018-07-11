@@ -69,6 +69,14 @@
     - not ethercat.stat.exists
     - not etherlab.stat.exists
 
+- name: EtherCAT master configuration
+  command: "./ethercat-update-conf.sh {{ ethercat_interface }}"
+  args:
+    chdir: /opt/oblac-drives
+  when:
+    - not ethercat.stat.exists
+    - not etherlab.stat.exists
+
 #################### Services ####################
 - name: Copy the ethercat.service systemd file
   copy:

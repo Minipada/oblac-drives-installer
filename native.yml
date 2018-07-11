@@ -38,10 +38,10 @@
 
   roles:
     - dependencies
+    - util
     - ethercat-master-sncn-installer
     - odb
     - docker
     - motion-master-bridge
     - oblac-drives
     - motion-master
-    - util
