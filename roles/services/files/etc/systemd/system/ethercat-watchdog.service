@@ -3,7 +3,7 @@ Description=Restarts EtherCAT Master service if no slaves are detected
 After=ethercat.service
 
 [Service]
-ExecStart=/opt/ethercat-watchdog.sh
+ExecStart=/opt/oblac-drives/ethercat-watchdog.sh
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=ethercat-watchdog
