@@ -122,3 +122,6 @@
       mode: 0755
       force: yes
     when: motion_master_version != ''
+
+  - name: Reboot
+    command: /sbin/reboot
