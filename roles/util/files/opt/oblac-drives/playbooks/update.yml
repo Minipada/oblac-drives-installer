@@ -32,6 +32,12 @@
       restart_policy: unless-stopped
       state: stopped
 
+  - name: Stop ethercat-watchdog.service (if available)
+    systemd:
+      name: ethercat-watchdog.service
+      state: stopped
+    ignore_errors: yes
+
   - name: Stop services
     systemd:
       name: "{{ item }}"
