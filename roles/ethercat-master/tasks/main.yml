@@ -114,8 +114,8 @@
     owner: root
     mode: 0644
   with_items:
-    - ethercat-update-conf.service
-    - ethercat-watchdog.service
+    - etc/systemd/system/ethercat-update-conf.service
+    - etc/systemd/system/ethercat-watchdog.service
   when: native is not defined
 
 - name: Enable utility EtherCAT systemd services
