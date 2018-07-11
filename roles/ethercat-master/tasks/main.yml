@@ -86,6 +86,12 @@
     mode: 0644
     force: no
 
+- lineinfile:
+    path: /etc/systemd/system/ethercat.service
+    regexp: '^After=network.target'
+    line: 'After=network.target ethercat-update-conf.service'
+  when: native is not defined
+
 - name: Enable EtherCAT systemd service
   systemd:
     name: ethercat.service

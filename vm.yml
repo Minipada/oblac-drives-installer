@@ -52,12 +52,12 @@
     - network
     - grub
     - dependencies
-    - ethercat-master-sncn-installer
+    - util
+    - ethercat-master
     - odb
     - docker
     - motion-master-bridge
     - oblac-drives
     - motion-master
-    - util
     - ansible
     - clean-up
