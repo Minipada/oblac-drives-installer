@@ -14,3 +14,25 @@
     mode: 0755
     force: yes
   when: motion_master_version != ''
+
+- name: Copy the motion-master.service systemd file
+  copy:
+    src: etc/systemd/system/motion-master.service
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+
+- name: Enable systemd services
+  systemd:
+    name: motion-master.service
+    enabled: yes
+  when: native is not defined
+
+- name: Start motion-master.service after installation, but disable automatic start on boot
+  systemd:
+    name: motion-master.service
+    enabled: no
+    state: started
+  when:
+    - native is defined
+    - native

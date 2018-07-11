@@ -31,3 +31,25 @@
   when:
     - not ethercat.stat.exists
     - not etherlab.stat.exists
+
+- name: Copy the ethercat.service systemd file
+  copy:
+    src: etc/systemd/system/ethercat.service
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+    force: no
+
+- name: Enable EtherCAT systemd service
+  systemd:
+    name: ethercat.service
+    enabled: yes
+
+- name: Start ethercat.service after installation, but disable automatic start on boot
+  systemd:
+    name: ethercat.service
+    enabled: no
+    state: started
+  when:
+    - native is defined
+    - native
