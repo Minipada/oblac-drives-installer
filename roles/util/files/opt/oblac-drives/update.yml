@@ -14,8 +14,8 @@
   tasks:
   - name: Get oblac-drives port
     shell: docker port oblac-drives | grep 80 | awk '{print $3}' | cut -d ":" -f 2
-    register: oblac_drives_port
-    failed_when: "oblac_drives_port.stdout == ''"
+    register: oblac_drives_docker_container_port
+    failed_when: "oblac_drives_docker_container_port.stdout == ''"
 
   - name: Stop the motion-master-bridge container
     docker_container:
@@ -100,7 +100,7 @@
       recreate: yes
       restart_policy: always
       published_ports:
-        - "{{ oblac_drives_port.stdout }}:80"
+        - "{{ oblac_drives_docker_container_port.stdout }}:80"
       volumes:
         - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
 
