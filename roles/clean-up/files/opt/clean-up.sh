@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script zeroes out any space not needed for packaging a new Ubuntu virtual machine.
 
