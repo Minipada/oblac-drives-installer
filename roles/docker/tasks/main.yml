@@ -66,6 +66,11 @@
     append: yes
   when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
+- name: Uninstall the deprecated docker-py Python library for the Docker Engine API
+  pip:
+    name: docker-py
+    state: absent
+
 - name: Pip install Python library for the Docker Engine API
   pip:
     name: docker
