@@ -98,10 +98,10 @@
     enabled: yes
   when: native is not defined
 
-- name: Start ethercat.service after installation, but disable automatic start on boot
+- name: Start ethercat.service after installation and enable automatic start on boot
   systemd:
     name: ethercat.service
-    enabled: no
+    enabled: yes
     state: started
   when:
     - native is defined

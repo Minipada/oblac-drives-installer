@@ -37,7 +37,7 @@ case "$1" in
             exit -1;
         fi
 
-        echo "Updating the OBLAC Drives bundle. Please make sure that OBLAC Drives is currently running."
+        echo "Updating the OBLAC Drives bundle."
         ansible-playbook -i "localhost," -c local /opt/oblac-drives/update.yml --extra-vars "bundle_version=${2}" && \
         echo "OBLAC Drives successfully updated."
         echo

@@ -7,25 +7,27 @@
     ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  - name: Stop the motion-master-bridge container
+  - name: Run motion-master-bridge container
     docker_container:
       name: motion-master-bridge
       image: synapticon/motion-master-bridge
       network_mode: host
       restart_policy: unless-stopped
-      state: stopped
 
-  - name: Stop the oblac-drives container
+  - name: Run oblac-drives container
     docker_container:
       name: oblac-drives
       image: synapticon/oblac-drives
       restart_policy: unless-stopped
-      state: stopped
+      published_ports:
+        - {{ oblac_drives_port }}:80
+      volumes:
+        - /opt/oblac-drives/firmwares:/usr/share/nginx/html/firmwares:ro
 
-  - name: Stop services
+  - name: Start services
     systemd:
       name: "{{ item }}"
-      state: stopped
+      state: started
     with_items:
-      - motion-master.service
       - ethercat.service
+      - motion-master.service

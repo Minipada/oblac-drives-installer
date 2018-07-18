@@ -47,26 +47,12 @@
     owner: root
     mode: 0755
   with_items:
-    - opt/oblac-drives/playbooks/vm/start.yml
-    - opt/oblac-drives/playbooks/vm/stop.yml
-  when: native is not defined
-
-- name: Copy native start/stop playbooks
-  copy:
-    src: "{{ item }}"
-    dest: /opt/oblac-drives
-    owner: root
-    mode: 0755
-  with_items:
-    - opt/oblac-drives/playbooks/native/start.yml
-    - opt/oblac-drives/playbooks/native/stop.yml
-  when:
-    - native is defined
-    - native
+    - opt/oblac-drives/start.yml
+    - opt/oblac-drives/stop.yml
 
 - name: Copy update playbook
   copy:
-    src: opt/oblac-drives/playbooks/update.yml
+    src: opt/oblac-drives/update.yml
     dest: /opt/oblac-drives
     owner: root
     mode: 0755
@@ -74,7 +60,6 @@
 - name: Copy somanet_cia402.sii
   copy:
     src: opt/oblac-drives/somanet_cia402.sii
-    dest: /opt/oblac-drives/
+    dest: /opt/oblac-drives
     owner: root
     mode: 0644
-

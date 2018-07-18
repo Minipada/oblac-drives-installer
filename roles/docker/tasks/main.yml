@@ -66,6 +66,13 @@
     append: yes
   when: (docker_info.failed) or (docker_info.stdout is version_compare(required_docker_version,'<'))
 
+- name: Pip remove docker-py if installed
+  pip:
+    name: docker-py
+    state: absent
+
 - name: Pip install Python library for the Docker Engine API
   pip:
     name: docker
+    version: "2.7.0"
+    state: present
