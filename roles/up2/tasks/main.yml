@@ -1,0 +1,59 @@
+---
+- name: Copy wired.network to /etc/systemd/network
+  copy:
+    src: etc/systemd/network/wired.network
+    dest: /etc/systemd/network
+
+- name: Copy wireless.network to /etc/systemd/network
+  copy:
+    src: etc/systemd/network/wireless.network
+    dest: /etc/systemd/network
+
+- name: Install WPA supplicant
+  apt:
+    name: wpasupplicant
+    state: present
+
+- name: Get wlan name
+  command: networkctl | awk '/wlan/ {print $2}'
+  register: wlan_name
+
+- name: Copy WPA supplicant configuration file
+  template:
+    src: wpa_supplicant.conf
+    dest: "/etc/wpa_supplicant/wpa_supplicant-{{ wlan_name.stdout }}.conf"
+
+- name: Enable wlan service
+  systemd:
+    name: wpa_supplicant@{{ wlan_name.stdout }}.service
+    state: started
+    enabled: yes
+
+- name: Disable systemd-networkd-wait-online.service
+  systemd:
+    name: systemd-networkd-wait-online.service
+    state: stopped
+    masked: yes
+
+- name: Copy before.rules to to /etc/ufw
+  copy:
+    src: etc/ufw/before.rules
+    dest: /etc/ufw
+
+- name: Enable IP forwarding   
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Change the DEFAULT_FORWARD_POLICY to "ACCEPT"
+  replace:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_FORWARD_POLICY'
+    replace: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+
+- name: Enable UFW
+  ufw:
+    state: enabled

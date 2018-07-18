@@ -1,0 +1,7 @@
+[Match]
+Name=enp2s0
+
+[Network]
+DHCP=ipv4
+IPForward=yes
+IPMasquerade=yes
