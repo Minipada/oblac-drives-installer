@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Default interface used inside the OBLAC Drives VM
-INTERFACE="ens33"
+INTERFACE="{{ ethercat_interface }}"
 
 # If available, use the interface provided as the script argument
 if [ "$#" -eq 1 ]; then

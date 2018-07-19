@@ -22,6 +22,11 @@
   with_fileglob:
     - opt/oblac-drives/*.sh
 
+- name: Copy ethercat-update-conf.sh
+  template:
+    src: opt/oblac-drives/ethercat-update-conf.sh.j2
+    dest: /opt/oblac-drives
+
 - name: Copy motd files
   copy:
     src: "{{ item }}"
