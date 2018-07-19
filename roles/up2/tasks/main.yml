@@ -52,10 +52,10 @@
     reload: yes
 
 - name: Change the DEFAULT_FORWARD_POLICY to "ACCEPT"
-  replace:
+  lineinfile:
     path: /etc/default/ufw
-    regexp: '^DEFAULT_FORWARD_POLICY'
-    replace: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+    regexp: '^DEFAULT_FORWARD_POLICY='
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
 
 - name: Enable UFW
   ufw:
