@@ -123,5 +123,10 @@
       force: yes
     when: motion_master_version != ''
 
-  - name: Reboot
-    command: /sbin/reboot
+  - name: Start services
+    systemd:
+      name: "{{ item }}"
+      state: started
+    with_items:
+      - motion-master.service
+      - ethercat.service
