@@ -15,8 +15,11 @@
     state: present
 
 - name: Get wlan name
-  command: networkctl | awk '/wlan/ {print $2}'
+  command: bash -c "networkctl | awk '/wlan/ {print $2}'"
   register: wlan_name
+
+- debug:
+    msg: "wlan name is {{ wlan_name.stdout }}"
 
 - name: Copy WPA supplicant configuration file
   template:
