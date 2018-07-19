@@ -37,12 +37,21 @@
       state: directory
 
   roles:
-    - dependencies
-    - util
-    - ethercat-master
-    - odb
-    - docker
-    - motion-master-bridge
-    - oblac-drives
-    - motion-master
-    - up2
+    - role: dependencies
+      tags: dependencies
+    - role: util
+      tags: util
+    - role: ethercat-master
+      tags: ethercat-master
+    - role: odb
+      tags: odb
+    - role: docker
+      tags: docker
+    - role: motion-master-bridge
+      tags: motion-master-bridge
+    - role: oblac-drives
+      tags: oblac-drives
+    - role: motion-master
+      tags: motion-master
+    - role: up2
+      tags: up2
