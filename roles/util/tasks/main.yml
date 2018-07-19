@@ -25,7 +25,7 @@
 - name: Copy ethercat-update-conf.sh
   template:
     src: opt/oblac-drives/ethercat-update-conf.sh.j2
-    dest: /opt/oblac-drives
+    dest: /opt/oblac-drives/ethercat-update-conf.sh
 
 - name: Copy motd files
   copy:
