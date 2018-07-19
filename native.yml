@@ -5,13 +5,13 @@
   become: yes
 
   vars:
+    target: 'native'
     ansible_python_interpreter: /usr/bin/python3
     bundle_version: ''
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
     ethercat_interface: 'eth0'
-    native: true
     required_docker_version: '17.05.0'
 
   vars_prompt:

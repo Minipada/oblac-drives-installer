@@ -77,7 +77,6 @@
     - not ethercat.stat.exists
     - not etherlab.stat.exists
 
-#################### Services ####################
 - name: Copy the ethercat.service systemd file
   copy:
     src: etc/systemd/system/ethercat.service
@@ -90,22 +89,13 @@
     path: /etc/systemd/system/ethercat.service
     regexp: '^After=network.target'
     line: 'After=network.target ethercat-update-conf.service'
-  when: native is not defined
+  when: target == 'vm' or target == 'up2'
 
-- name: Enable EtherCAT systemd service
-  systemd:
-    name: ethercat.service
-    enabled: yes
-  when: native is not defined
-
-- name: Start ethercat.service after installation and enable automatic start on boot
+- name: Enable and start EtherCAT systemd service
   systemd:
     name: ethercat.service
     enabled: yes
     state: started
-  when:
-    - native is defined
-    - native
 
 - name: Copy the utility EtherCAT systemd files
   copy:
@@ -116,7 +106,7 @@
   with_items:
     - etc/systemd/system/ethercat-update-conf.service
     - etc/systemd/system/ethercat-watchdog.service
-  when: native is not defined
+  when: target == 'vm' or target == 'up2'
 
 - name: Enable utility EtherCAT systemd services
   systemd:
@@ -126,4 +116,4 @@
   with_items:
     - ethercat-update-conf.service
     - ethercat-watchdog.service
-  when: native is not defined
+  when: target == 'vm' or target == 'up2'

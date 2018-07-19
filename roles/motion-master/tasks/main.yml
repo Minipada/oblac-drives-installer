@@ -26,13 +26,11 @@
   systemd:
     name: motion-master.service
     enabled: yes
-  when: native is not defined
+  when: target == 'vm' or target == 'up2'
 
 - name: Start motion-master.service after installation and enable automatic start on boot
   systemd:
     name: motion-master.service
     enabled: yes
     state: started
-  when:
-    - native is defined
-    - native
+  when: target == 'native'
