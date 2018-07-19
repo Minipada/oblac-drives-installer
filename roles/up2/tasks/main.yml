@@ -23,7 +23,7 @@
 
 - name: Copy WPA supplicant configuration file
   template:
-    src: wpa_supplicant.conf
+    src: etc/wpa_supplicant/wpa_supplicant.conf.j2
     dest: "/etc/wpa_supplicant/wpa_supplicant-{{ wlan_name.stdout }}.conf"
 
 - name: Enable wlan service
