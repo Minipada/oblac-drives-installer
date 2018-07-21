@@ -7,7 +7,6 @@
   vars:
     target: 'up2'
     ansible_python_interpreter: /usr/bin/python3
-    bundle_version: ''
     oblac_drives_version: 'latest'
     motion_master_version: ''
     motion_master_bridge_version: 'latest'
@@ -17,11 +16,12 @@
   vars_prompt:
   - name: "bundle_version"
     prompt: "\e[1;33mEnter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)\e[0m"
+    default: ""
     private: no
 
   - name: "oblac_drives_port"
     prompt: "\e[1;33mEnter the port number to bind OBLAC Drives to.\e[0m"
-    default: "6789"
+    default: "80"
     private: no
 
   pre_tasks:
