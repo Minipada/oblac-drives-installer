@@ -3,7 +3,7 @@
   lineinfile:
     path: /etc/sysctl.conf
     line: 'kernel.printk = 3 4 1 3'
-  when: target == 'vm' || target == 'up2'
+  when: target == 'vm' or target == 'up2'
 
 - name: Copy binaries
   copy:
