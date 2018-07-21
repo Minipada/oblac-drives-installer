@@ -15,7 +15,7 @@
 
   vars_prompt:
   - name: "bundle_version"
-    prompt: "\e[1;33mEnter the OBLAC Drives bundle version to install (available versions and firmware compatibility: https://synapticon-tools.s3.amazonaws.com/firmwares/odb.json)\e[0m"
+    prompt: "\e[1;33mEnter the bundle version to install or leave empty for the latest version.\e[0m"
     default: ""
     private: no
 
