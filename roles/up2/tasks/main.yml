@@ -12,6 +12,12 @@
     state: present
     key: "{{ lookup('file', '/home/ubuntu/.ssh/id_rsa.pub') }}"
 
+- name: Disallow password authentication for user ubuntu
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+
 - name: Remove all files from /etc/netplan
   shell: rm -f /etc/netplan/*
 
