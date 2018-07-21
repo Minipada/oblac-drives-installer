@@ -1,6 +1,6 @@
 ---
 - name: Remove all files from /etc/netplan
-  shell: rm /etc/netplan/*
+  shell: rm -f /etc/netplan/*
 
 - name: Copy 99-disable-network-config.cfg to /etc/cloud/cloud.cfg.d
   copy:
