@@ -14,15 +14,14 @@
     src: etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
     dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 
-- name: Copy wired.network to /etc/systemd/network
+- name: Copy network configurations to /etc/systemd/network/
   copy:
-    src: etc/systemd/network/wired.network
-    dest: /etc/systemd/network
-
-- name: Copy wireless.network to /etc/systemd/network
-  copy:
-    src: etc/systemd/network/wireless.network
-    dest: /etc/systemd/network
+    src: "{{ item }}"
+    dest: /etc/systemd/network/
+    owner: root
+    mode: 600
+  with_fileglob:
+    - etc/systemd/network/*
 
 - name: Install WPA supplicant
   apt:
