@@ -6,6 +6,12 @@
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
 
+- name: Set authorized key took from file for user ubuntu
+  authorized_key:
+    user: ubuntu
+    state: present
+    key: "{{ lookup('file', '/home/ubuntu/.ssh/id_rsa.pub') }}"
+
 - name: Remove all files from /etc/netplan
   shell: rm -f /etc/netplan/*
 
