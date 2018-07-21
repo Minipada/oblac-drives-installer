@@ -1,4 +1,12 @@
 ---
+- name: Remove all files from /etc/netplan
+  shell: rm /etc/netplan/*
+
+- name: Copy 99-disable-network-config.cfg to /etc/cloud/cloud.cfg.d
+  copy:
+    src: etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+    dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+
 - name: Copy wired.network to /etc/systemd/network
   copy:
     src: etc/systemd/network/wired.network
@@ -43,6 +51,18 @@
     src: etc/ufw/before.rules
     dest: /etc/ufw
 
+- name: Change the DEFAULT_INPUT_POLICY to "ACCEPT"
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_INPUT_POLICY='
+    line: 'DEFAULT_INPUT_POLICY="ACCEPT"'
+
+- name: Change the DEFAULT_FORWARD_POLICY to "ACCEPT"
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_FORWARD_POLICY='
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+
 - name: Enable IP forwarding in sysctl
   sysctl:
     name: net.ipv4.ip_forward
@@ -56,12 +76,6 @@
     path: /etc/ufw/sysctl.conf
     regexp: '^#net/ipv4/ip_forward='
     line: 'net/ipv4/ip_forward=1'
-
-- name: Change the DEFAULT_FORWARD_POLICY to "ACCEPT"
-  lineinfile:
-    path: /etc/default/ufw
-    regexp: '^DEFAULT_FORWARD_POLICY='
-    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
 
 - name: Enable UFW
   ufw:
