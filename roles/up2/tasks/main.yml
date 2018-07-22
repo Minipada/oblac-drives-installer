@@ -18,8 +18,10 @@
     regexp: '^#PasswordAuthentication'
     line: 'PasswordAuthentication no'
 
-- name: Remove all files from /etc/netplan
-  shell: rm -f /etc/netplan/*
+- name: Remove 50-cloud-init.yaml file from netplan
+  file:
+    state: absent
+    path: /etc/netplan/50-cloud-init.yaml
 
 - name: Copy 99-disable-network-config.cfg to /etc/cloud/cloud.cfg.d
   copy:
