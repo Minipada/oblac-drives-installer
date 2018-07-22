@@ -47,10 +47,25 @@
 - debug:
     msg: "wlan name is {{ wlan_name.stdout }}"
 
+- name: Generate UUID to use for SSID suffix
+  set_fact:
+    uuid: "{{ ansible_date_time.iso8601_micro | to_uuid }}"
+
+- name: Set WiFi SSID
+  set_fact:
+    wifi_ssid: "oblac-drives-{{ uuid[:8] }}"
+
+- debug:
+    msg: "wifi ssid is {{ wifi_ssid }}"
+
+- stat: path="/etc/wpa_supplicant/wpa_supplicant-{{ wlan_name.stdout }}.conf"
+  register: st
+
 - name: Copy WPA supplicant configuration file
   template:
     src: etc/wpa_supplicant/wpa_supplicant.conf.j2
     dest: "/etc/wpa_supplicant/wpa_supplicant-{{ wlan_name.stdout }}.conf"
+  when: not st.stat.exists
 
 - name: Enable wlan service
   systemd:
