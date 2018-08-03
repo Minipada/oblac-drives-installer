@@ -1,11 +1,19 @@
 [{
+  "version": "18.6",
+  "dependencies": {
+    "oblac-drives": "v1.7.0",
+    "motion-master": "v1.9.0",
+    "motion-master-bridge": "v1.5.0"
+  },
+  "firmwares": ["v4.0.0"]
+}, {
   "version": "18.5",
   "dependencies": {
     "oblac-drives": "v1.6.4",
     "motion-master": "v1.8.3",
     "motion-master-bridge": "v1.5.0"
   },
-  "firmwares": ["v4.0.0-rc8", "v4.0.0-rc9", "v4.0.0-rc10", "v4.0.0-rc11"]
+  "firmwares": ["v4.0.0-rc11"]
 }, {
   "version": "18.4",
   "dependencies": {
