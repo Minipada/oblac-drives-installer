@@ -15,7 +15,8 @@ aws s3 sync s3://oblac-drives exports/ --exclude="*" --include="export-*"
 for file in exports/*.ova
 do
   if [[ $file =~ ^exports/export-(.*)\.ova$ ]]; then
-    name=${BASH_REMATCH[1]}
+    instance_id=${BASH_REMATCH[1]}
+    name=export-$instance_id
     if [ -d exports/$name ]; then
       continue
     fi
@@ -26,8 +27,8 @@ do
     suffix=`date +%Y%m%d-%H%M`
     deploy $name oblac-drives-${suffix}
     # Cleanup
-    aws ec2 terminate-instances --instance-id $name
-    aws s3 rm s3://oblac-drives/export-$name.ova
-    rm -rf exports/$name exports/export-$name.ova
+    aws ec2 terminate-instances --instance-id $instance_id
+    aws s3 rm s3://oblac-drives/$file
+    rm -rf exports/$name*
   fi
 done
