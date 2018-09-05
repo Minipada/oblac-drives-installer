@@ -12,7 +12,7 @@ pipeline {
         stage('Copy motion-master binary') {
             steps {
                 copyArtifacts(projectName: 'motion-master/master');
-                sh 'cp bin/motion-master roles/oblac-drives/files/opt';
+                sh 'cp bin/motion-master roles/motion-master/files/opt';
             }
         }
         stage('Create OBLAC Drives VMs') {
