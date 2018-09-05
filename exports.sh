@@ -28,7 +28,7 @@ do
     deploy $name oblac-drives-${suffix}
     # Cleanup
     aws ec2 terminate-instances --instance-id $instance_id
-    aws s3 rm s3://oblac-drives/$file
+    aws s3 rm s3://oblac-drives/$name.ova
     rm -rf exports/$name*
   fi
 done
