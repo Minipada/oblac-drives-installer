@@ -1,0 +1,11 @@
+---
+- name: Create the oblac-drives-ip-addr Docker container
+  docker_container:
+    name: oblac-drives-ip-addr
+    image: synapticon/oblac-drives-ip-addr
+    pull: yes
+    recreate: yes
+    restart_policy: always
+    network_mode: host
+    env:
+      NETWORK_INTERFACE: enp2s0
