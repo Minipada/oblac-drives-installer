@@ -23,10 +23,10 @@
     state: absent
     path: /etc/netplan/50-cloud-init.yaml
 
-- name: Copy 99-disable-network-config.cfg to /etc/cloud/cloud.cfg.d
-  copy:
-    src: etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
-    dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+# - name: Copy 99-disable-network-config.cfg to /etc/cloud/cloud.cfg.d
+#   copy:
+#     src: etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+#     dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 
 - name: Copy network configurations to /etc/systemd/network/
   copy:
