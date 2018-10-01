@@ -73,17 +73,17 @@
     dest: "{{ wpa_supplicant_conf }}"
   when: not st.stat.exists
 
-# - name: Enable wlan service
-#   systemd:
-#     name: wpa_supplicant@{{ wlan_name.stdout }}.service
-#     state: started
-#     enabled: yes
-
 - name: Enable wlan service
   systemd:
-    name: wpa_supplicant.service
+    name: wpa_supplicant@{{ wlan_name.stdout }}.service
     state: started
     enabled: yes
+
+# - name: Enable wlan service
+#   systemd:
+#     name: wpa_supplicant.service
+#     state: started
+#     enabled: yes
 
 - name: Disable systemd-networkd-wait-online.service
   systemd:
