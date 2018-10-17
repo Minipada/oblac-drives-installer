@@ -1,8 +1,8 @@
 [{
   "version": "18.7",
   "dependencies": {
-    "oblac-drives": "v1.8.0",
-    "motion-master": "v1.10.0",
+    "oblac-drives": "v1.8.1",
+    "motion-master": "v1.10.2",
     "motion-master-bridge": "v1.5.0"
   },
   "firmwares": ["v4.0.1", "v4.1.0-alpha5"]
