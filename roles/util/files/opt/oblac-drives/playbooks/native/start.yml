@@ -17,13 +17,17 @@
 
   - debug:
       msg: "{{ bundle_version }}"
-    when: bundle_version is defined
+    when:
+      - bundle_version is defined
+      - bundle_version != ""
 
   - name: Override oblac_drives_version and motion_master_version parameters by dependencies in bundle.json
     set_fact:
       oblac_drives_version: "{{ bundle_version.dependencies['oblac-drives'] }}"
       motion_master_bridge_version: "{{ bundle_version.dependencies['motion-master-bridge'] }}"
-    when: bundle_version is defined
+    when:
+      - bundle_version is defined
+      - bundle_version != ""
 
   - name: Run motion-master-bridge container
     docker_container:
