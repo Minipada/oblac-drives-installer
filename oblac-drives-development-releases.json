@@ -2,8 +2,8 @@
   "version": "test-development-releases",
   "date": "2018-11-12",
   "dependencies": {
-    "oblac-drives": "v1.9.1",
-    "motion-master": "v1.10.4",
+    "oblac-drives": "v1.10.0-alpha.0",
+    "motion-master": "v1.10.5-alpha1",
     "motion-master-bridge": "v1.5.1"
   }
 }]
