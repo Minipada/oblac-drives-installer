@@ -5,6 +5,5 @@
     "oblac-drives": "v1.10.0-alpha.0",
     "motion-master": "v1.10.5-alpha1",
     "motion-master-bridge": "v1.5.1"
-  },
-  "firmwares": []
+  }
 }]
