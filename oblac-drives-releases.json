@@ -3,7 +3,7 @@
   "date": "2018-11-12",
   "supported": true,
   "dependencies": {
-    "oblac-drives": "v1.9.0",
+    "oblac-drives": "v1.9.1",
     "motion-master": "v1.10.5",
     "motion-master-bridge": "v1.5.1"
   },
