@@ -140,6 +140,11 @@ To convert a VMX to an OVA file, type a command like the following:
 
     $ aws s3api put-bucket-cors --bucket "synapticon-tools" --cors-configuration file://cors.json
 
+## Copy OVAs
+
+    $ aws s3 cp s3://oblac-drives/oblac-drives-20181112-1801.ova s3://oblac-drives/oblac-drives-18.7.ova
+    $ aws s3 cp s3://oblac-drives/oblac-drives-18.7.ova s3://oblac-drives/oblac-drives.ova
+
 ## Resources
 
 * https://www.vmware.com/support/developer/ovf/
