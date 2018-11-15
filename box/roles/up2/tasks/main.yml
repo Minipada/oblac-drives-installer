@@ -1,0 +1,20 @@
+---
+- name: Add a "non-free" repo
+  apt_repository:
+    repo: deb http://httpredir.debian.org/debian/ stretch main contrib non-free
+    state: present
+    update_cache: yes
+
+- name: Install WiFi related packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - firmware-iwlwifi
+  when: ansible_distribution == 'Debian'
+
+# https://wiki.debian.org/iwlwifi
+- name: Add the iwlwifi module
+  modprobe:
+    name: iwlwifi
+    state: present

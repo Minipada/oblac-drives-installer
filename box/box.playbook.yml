@@ -34,3 +34,4 @@
     - geerlingguy.docker
     - igh-ethercat-master
     - oblac-drives-update-service
+    - { role: up2, when: box_target == 'up2', tags: ['up2'] }

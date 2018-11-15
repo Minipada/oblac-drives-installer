@@ -5,3 +5,4 @@
 box_target=up2
 box_primary_interface=enp2s0
 box_ethercat_interface=enp3s0
+box_wifi_interface=wlp4s0
