@@ -11,7 +11,7 @@
     owner: root
     mode: 0644
 
-- name: Restart a container
+- name: Run oblac-drives-update-service Docker container
   docker_container:
     name: oblac-drives-update-service
     image: synapticon/oblac-drives-update-service
