@@ -1,0 +1,73 @@
+---
+# https://wiki.debian.org/iwlwifi
+- name: Add a "non-free" repo
+  apt_repository:
+    repo: deb http://httpredir.debian.org/debian/ stretch main contrib non-free
+    state: present
+    update_cache: yes
+
+- name: Install network related packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - firmware-iwlwifi
+    - wpasupplicant
+    - isc-dhcp-server
+
+- name: Add the iwlwifi module
+  modprobe:
+    name: iwlwifi
+    state: present
+
+- name: Copy wifi to /etc/network/interfaces.d/wifi
+  template:
+    src: etc/network/interfaces.d/wifi.j2
+    dest: /etc/network/interfaces.d/wifi
+    owner: root
+    mode: 0644
+
+# https://wiki.debian.org/DHCP_Server
+- name: Ensure line INTERFACESv4={{ box_wifi_interface }} in /etc/default/isc-dhcp-server
+  lineinfile:
+    path: /etc/default/isc-dhcp-server
+    regexp: '^INTERFACESv4='
+    line: 'INTERFACESv4={{ box_wifi_interface }}'
+
+- name: Copy dhcpd.conf to /etc/dhcp/dhcpd.conf
+  copy:
+    src: etc/dhcp/dhcpd.conf
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    mode: 0644
+
+- name: Set fact wpa_supplicant_conf
+  set_fact:
+    wpa_supplicant_conf: '/etc/wpa_supplicant/wpa_supplicant-{{ box_wifi_interface }}.conf'
+
+- name: 'Stat {{ wpa_supplicant_conf }} path'
+  stat:
+    path: '{{ wpa_supplicant_conf }}'
+  register: st
+
+- name: Set fact uuid
+  set_fact:
+    uuid: '{{ ansible_date_time.iso8601_micro | to_uuid }}'
+  when: not st.stat.exists
+
+- name: 'Set fact wifi_ssid to oblac-drives-{{ uuid[:8] }}'
+  set_fact:
+    box_wifi_ssid: 'oblac-drives-{{ uuid[:8] }}'
+  when: not st.stat.exists
+
+- name: Copy WPA supplicant configuration file
+  template:
+    src: etc/wpa_supplicant/wpa_supplicant.conf.j2
+    dest: '{{ wpa_supplicant_conf }}'
+  when: not st.stat.exists
+
+- name: Enable wpa_supplicant service
+  systemd:
+    name: wpa_supplicant.service
+    state: started
+    enabled: yes
