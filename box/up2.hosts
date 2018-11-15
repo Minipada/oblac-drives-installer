@@ -1,5 +1,6 @@
 [all]
 172.20.1.139
+172.20.1.142
 
 [all:vars]
 box_target=up2
