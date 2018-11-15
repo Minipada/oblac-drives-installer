@@ -113,3 +113,8 @@
 - name: Enable UFW
   ufw:
     state: enabled
+
+- name: 'Fetch {{ wpa_supplicant_conf }}'
+  fetch:
+    src: '{{ wpa_supplicant_conf }}'
+    dest: '{{ box_fetch_directory }}'
