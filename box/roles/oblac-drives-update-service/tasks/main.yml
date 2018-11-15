@@ -4,17 +4,24 @@
     path: /etc/systemd/system/docker.service.d
     state: directory
 
-- name: 'Enable remote Docker Engine API over HTTP on {{ oblac_drives.docker_engine_api_port }} port'
+- name: 'Enable remote Docker Engine API over HTTP on {{ box_docker_engine_api_port }} port'
   template:
     src: etc/systemd/system/docker.service.d/override.conf.j2
     dest: /etc/systemd/system/docker.service.d/override.conf
     owner: root
     mode: 0644
 
-- name: Run oblac-drives-update-service Docker container
+- name: Run oblac-drives-update-service container
   docker_container:
     name: oblac-drives-update-service
     image: synapticon/oblac-drives-update-service
     state: started
     restart_policy: always
     network_mode: host
+
+- name: Copy motion-master-log to /usr/local/bin
+  copy:
+    src: usr/local/bin/motion-master-log
+    dest: /usr/local/bin/
+    owner: root
+    mode: 0755

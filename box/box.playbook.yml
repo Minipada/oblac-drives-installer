@@ -8,13 +8,10 @@
     ansible_ssh_pass: drive
     ansible_become: true
     ansible_become_pass: drive
-    oblac_drives:
-      primary_interface: ens33
-      ethercat_interface: ens35
-      user: drive
-      docker_engine_api_port: 62376
+    box_user: drive
+    box_docker_engine_api_port: 62376
     docker_users:
-      - '{{ oblac_drives.user }}'
+      - '{{ box_user }}'
     pip_install_packages:
       - name: docker
 
@@ -32,7 +29,7 @@
     - vm
     - common
     - grub
-    - oblac-drives-user
+    - box-user
     - network
     - geerlingguy.pip
     - geerlingguy.docker
