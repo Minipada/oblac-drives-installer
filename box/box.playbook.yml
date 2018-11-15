@@ -33,5 +33,5 @@
     - geerlingguy.pip
     - geerlingguy.docker
     - igh-ethercat-master
-    - oblac-drives-update-service
+    - { role: oblac-drives-update-service, tags: ['odus'] }
     - { role: up2, when: box_target == 'up2', tags: ['up2'] }
