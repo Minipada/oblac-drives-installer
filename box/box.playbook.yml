@@ -26,7 +26,6 @@
       name: Etc/UTC
 
   roles:
-    - vm
     - common
     - grub
     - box-user

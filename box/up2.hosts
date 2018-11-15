@@ -2,5 +2,6 @@
 172.20.1.139
 
 [all:vars]
+box_target=up2
 box_primary_interface=enp2s0
 box_ethercat_interface=enp3s0
