@@ -1,0 +1,91 @@
+---
+- name: Retrieve facts for /opt/etherlab
+  stat:
+    path: /opt/etherlab 
+  register: etherlab
+
+- name: Git clone Etherlab_EtherCAT_Master
+  git:
+    repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
+    dest: /tmp/Etherlab_EtherCAT_Master
+    version: develop
+  when:
+    - not etherlab.stat.exists
+
+- name: Create gitlog.h for the installation of IgH EtherCAT Master
+  shell: |
+    echo -n "char* gitlog = \"" > master/gitlog.h
+    git log | head -1 | awk '{printf "%s", substr($2,1,8)}' >> master/gitlog.h
+    echo "\";" >> master/gitlog.h
+  args:
+    chdir: /tmp/Etherlab_EtherCAT_Master
+  when:
+    - not etherlab.stat.exists
+
+- name: Install IgH EtherCAT Master
+  command: '{{ item }}'
+  with_items:
+    - './bootstrap'
+    - './configure --enable-sii-assign --disable-8139too --enable-hrtimer --enable-cycles'
+    - 'make all modules'
+    - 'make modules_install install'
+    - 'ldconfig'
+    - 'depmod'
+  args:
+    chdir: /tmp/Etherlab_EtherCAT_Master
+  when:
+    - not etherlab.stat.exists
+
+- name: Remove cloned Etherlab_EtherCAT_Master directory
+  file:
+    state: absent
+    path: /tmp/Etherlab_EtherCAT_Master
+  when:
+    - not etherlab.stat.exists
+
+- name: Add ethercat binary to $PATH
+  file:
+    src: /opt/etherlab/bin/ethercat
+    dest: /usr/local/bin/ethercat
+    state: link
+  when:
+    - not etherlab.stat.exists
+
+- name: Copy ethercat services to /etc/systemd/system
+  copy:
+    src: '{{ item }}'
+    dest: /etc/systemd/system/
+    owner: root
+    mode: 0644
+  with_fileglob:
+    - etc/systemd/system/*.service
+
+- name: Copy ethercat-watchdog to /usr/local/bin
+  copy:
+    src: usr/local/bin/ethercat-watchdog
+    dest: /usr/local/bin/
+    owner: root
+    mode: 0755
+
+- name: Copy 99-EtherCAT.rules to /etc/udev/rules.d
+  template:
+    src: etc/udev/rules.d/99-EtherCAT.rules
+    dest: /etc/udev/rules.d/
+    owner: root
+    mode: 0644
+
+- name: Copy ethercat-update-conf to /usr/local/bin
+  template:
+    src: usr/local/bin/ethercat-update-conf.j2
+    dest: /usr/local/bin/ethercat-update-conf
+    mode: 0755
+
+- name: Enable all ethercat services
+  systemd:
+    name: '{{ item }}'
+    enabled: yes
+    daemon_reload: yes
+  with_items:
+    - ethercat-update-conf.service
+    - ethercat-watchdog.service
+    - ethercat.service

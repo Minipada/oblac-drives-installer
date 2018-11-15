@@ -1,0 +1,26 @@
+---
+- name: Install packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - build-essential
+    - libtool
+    - curl
+    - git
+
+- name: Install Debian packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - dh-autoreconf
+  when: ansible_distribution == 'Debian'
+
+- name: Install Ubuntu packages
+  apt:
+    name: '{{ item }}'
+    update_cache: yes
+  with_items:
+    - autoconf
+  when: ansible_distribution == 'Ubuntu'

@@ -1,0 +1,21 @@
+---
+- name: Copy interfaces to /etc/network/
+  copy:
+    src: etc/network/interfaces
+    dest: /etc/network/interfaces
+    owner: root
+    mode: 0644
+
+- name: Copy ethercat to /etc/network/interfaces.d/
+  template:
+    src: etc/network/interfaces.d/ethercat.j2
+    dest: /etc/network/interfaces.d/ethercat
+    owner: root
+    mode: 0644
+
+- name: Copy primary to /etc/network/interfaces.d/
+  template:
+    src: etc/network/interfaces.d/primary.j2
+    dest: /etc/network/interfaces.d/primary
+    owner: root
+    mode: 0644

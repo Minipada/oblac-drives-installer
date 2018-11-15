@@ -1,0 +1,20 @@
+---
+- name: Ensures /etc/systemd/system/docker.service.d dir exists
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: 'Enable remote Docker Engine API over HTTP on {{ oblac_drives.docker_engine_api_port }} port'
+  template:
+    src: etc/systemd/system/docker.service.d/override.conf.j2
+    dest: /etc/systemd/system/docker.service.d/override.conf
+    owner: root
+    mode: 0644
+
+- name: Restart a container
+  docker_container:
+    name: oblac-drives-update-service
+    image: synapticon/oblac-drives-update-service
+    state: started
+    restart_policy: always
+    network_mode: host

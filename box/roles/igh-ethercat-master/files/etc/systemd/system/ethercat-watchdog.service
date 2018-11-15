@@ -1,0 +1,12 @@
+[Unit]
+Description=Restarts EtherCAT Master service if no slaves are detected
+After=ethercat.service
+
+[Service]
+ExecStart=/usr/local/bin/ethercat-watchdog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ethercat-watchdog
+
+[Install]
+WantedBy=multi-user.target

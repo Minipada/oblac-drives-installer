@@ -1,0 +1,20 @@
+---
+# - name: Change grub screen resolution
+#   lineinfile:
+#     path: /etc/default/grub
+#     line: 'GRUB_GFXMODE=1024x768'
+
+- name: Remove GRUB_HIDDEN_TIMEOUT* lines
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_HIDDEN'
+    state: absent
+
+- name: Set GRUB_TIMEOUT to 0
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_TIMEOUT'
+    line: 'GRUB_TIMEOUT=0'
+
+- name: Update grub
+  command: /usr/sbin/update-grub

@@ -1,0 +1,24 @@
+---
+- name: 'Run sudo command with no password for {{ oblac_drives.user }} user'
+  lineinfile:
+    path: /etc/sudoers
+    line: '{{ oblac_drives.user }} ALL=(ALL) NOPASSWD:ALL'
+
+- name: Set authorized key for SSH access
+  authorized_key:
+    user: '{{ oblac_drives.user }}'
+    key: '{{ item }}'
+    state: present
+    exclusive: True
+  with_file:
+    - rsa.pub
+
+- name: Ensures /etc/systemd/system/getty@tty1.service.d dir exists
+  file:
+    path: /etc/systemd/system/getty@tty1.service.d
+    state: directory
+
+- name: 'Enable autologin for {{ oblac_drives.user }} user'
+  template:
+    src: etc/systemd/system/getty@tty1.service.d/override.conf.j2
+    dest: /etc/systemd/system/getty@tty1.service.d/override.conf

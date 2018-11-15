@@ -1,0 +1,40 @@
+---
+- hosts: all
+  connection: ssh
+  gather_facts: true
+
+  vars:
+    ansible_user: drive
+    ansible_ssh_pass: drive
+    ansible_become: true
+    ansible_become_pass: drive
+    oblac_drives:
+      primary_interface: ens33
+      ethercat_interface: ens35
+      user: drive
+      docker_engine_api_port: 62376
+    docker_users:
+      - '{{ oblac_drives.user }}'
+    pip_install_packages:
+      - name: docker
+
+  pre_tasks:
+  - name: Remove cdrom sources from /etc/apt/sources.list
+    lineinfile:
+      path: /etc/apt/sources.list
+      regexp: '^deb cdrom'
+      state: absent
+  - name: Set timezone to UTC
+    timezone:
+      name: Etc/UTC
+
+  roles:
+    - vm
+    - common
+    - grub
+    - oblac-drives-user
+    - network
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - igh-ethercat-master
+    - oblac-drives-update-service

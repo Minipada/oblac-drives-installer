@@ -1,0 +1,4 @@
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --noissue --autologin {{ oblac_drives.user }} %I $TERM
+Type=idle
