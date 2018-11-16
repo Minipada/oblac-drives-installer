@@ -6,6 +6,7 @@
   vars:
     ansible_user: drive
     ansible_ssh_pass: drive
+    # ansible_ssh_private_key_file: /opt/oblac-drives-box/172.20.1.151/id_rsa
     ansible_become: true
     ansible_become_pass: drive
     box_user: drive
