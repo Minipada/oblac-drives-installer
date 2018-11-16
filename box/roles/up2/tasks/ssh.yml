@@ -1,0 +1,51 @@
+---
+- name: Set fact id_rsa_path
+  set_fact:
+    id_rsa_path: '/home/{{ box_user }}/.ssh/id_rsa'
+
+- name: Set fact id_rsa_pub_path
+  set_fact:
+    id_rsa_pub_path: '/home/{{ box_user }}/.ssh/id_rsa.pub'
+
+- name: 'Stat {{ id_rsa_pub_path }}'
+  stat:
+    path: '{{ id_rsa_pub_path }}'
+  register: id_rsa_pub_path_st
+
+- name: 'Create a 2048-bit SSH key for user {{ box_user }} in {{ id_rsa_pub_path }}'
+  user:
+    name: '{{ box_user }}'
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+  when: not id_rsa_pub_path_st.stat.exists
+
+- name: 'Slurp {{ id_rsa_pub_path }}'
+  slurp:
+    src: '{{ id_rsa_pub_path }}'
+  register: id_rsa_pub_slurp
+  when: not id_rsa_pub_path_st.stat.exists
+
+- name: 'Add to authorized_keys the previously generated public SSH key for user {{ box_user }}'
+  authorized_key:
+    user: '{{ box_user }}'
+    state: present
+    key: "{{ id_rsa_pub_slurp['content'] | b64decode }}"
+  when: not id_rsa_pub_path_st.stat.exists
+
+- name: 'Fetch {{ id_rsa_path }} ' 
+  fetch:
+    src: '{{ id_rsa_path }}'
+    dest: '{{ box_fetch_directory_flat }}'
+    flat: yes
+
+- name: 'Fetch {{ id_rsa_pub_path }}'
+  fetch:
+    src: '{{ id_rsa_pub_path }}'
+    dest: '{{ box_fetch_directory_flat }}'
+    flat: yes
+
+- name: Disable password authentication for SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PasswordAuthentication'
+    line: 'PasswordAuthentication no'

@@ -1,7 +1,7 @@
 ---
 - include: docker-pull-all-tags.yml
 
-- name: Ensures /etc/systemd/system/docker.service.d dir exists
+- name: Ensure that /etc/systemd/system/docker.service.d exists
   file:
     path: /etc/systemd/system/docker.service.d
     state: directory
