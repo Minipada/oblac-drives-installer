@@ -1,0 +1,31 @@
+---
+- hosts: all
+  connection: ssh
+  gather_facts: true
+
+  vars:
+    ansible_user: root
+    ansible_ssh_pass: ''
+    ansible_become: true
+    ansible_become_pass: ''
+    box_user: root
+    box_docker_engine_api_port: 62376
+    docker_users:
+      - '{{ box_user }}'
+
+  pre_tasks:
+  - name: Remove cdrom sources from /etc/apt/sources.list
+    lineinfile:
+      path: /etc/apt/sources.list
+      regexp: '^deb cdrom'
+      state: absent
+  - name: Set timezone to UTC
+    timezone:
+      name: Etc/UTC
+
+  roles:
+    - common
+    - box-user
+    - network
+    - oblac-drives-update-service
+    - { role: up2, when: box_target == 'up2', tags: ['up2'] }

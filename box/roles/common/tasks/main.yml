@@ -1,13 +1,13 @@
 ---
-- name: Install packages
-  apt:
-    name: '{{ item }}'
-    update_cache: yes
-  with_items:
-    - build-essential
-    - libtool
-    - curl
-    - git
+# - name: Install packages
+#   apt:
+#     name: '{{ item }}'
+#     update_cache: yes
+#   with_items:
+#     - build-essential
+#     - libtool
+#     - curl
+#     - git
 
 - name: Install Debian packages
   apt:
@@ -24,13 +24,6 @@
   with_items:
     - autoconf
   when: ansible_distribution == 'Ubuntu'
-
-- name: Install latest open-vm-tools
-  apt:
-    name: open-vm-tools
-    update_cache: yes
-    state: latest
-  when: box_target == 'vm'
 
 - name: Stop kernel messages from flooding console
   lineinfile:

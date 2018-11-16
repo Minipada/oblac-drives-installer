@@ -1,7 +1,7 @@
 [all]
-192.168.125.129
+192.168.11.129
 
 [all:vars]
 box_target=vm
-box_primary_interface=ens33
-box_ethercat_interface=ens35
+box_primary_interface=enp2s1
+box_ethercat_interface=enp2s2

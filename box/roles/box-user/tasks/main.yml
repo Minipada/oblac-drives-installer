@@ -1,9 +1,4 @@
 ---
-- name: 'Run sudo command with no password for {{ box_user }} user'
-  lineinfile:
-    path: /etc/sudoers
-    line: '{{ box_user }} ALL=(ALL) NOPASSWD:ALL'
-
 - name: Set authorized key for SSH access
   authorized_key:
     user: '{{ box_user }}'
