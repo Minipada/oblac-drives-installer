@@ -4,15 +4,6 @@
     path: /etc/sudoers
     line: '{{ box_user }} ALL=(ALL) NOPASSWD:ALL'
 
-- name: Set authorized key for SSH access
-  authorized_key:
-    user: '{{ box_user }}'
-    key: '{{ item }}'
-    state: present
-    exclusive: True
-  with_file:
-    - rsa.pub
-
 - name: Ensure that /etc/systemd/system/getty@tty1.service.d exists
   file:
     path: /etc/systemd/system/getty@tty1.service.d
