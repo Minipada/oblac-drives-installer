@@ -4,7 +4,7 @@
   "supported": true,
   "description": "Improved position auto-tuning and support for OBLAC Drives Update Service.",
   "dependencies": {
-    "oblac-drives": "v1.9.1",
+    "oblac-drives": "v1.9.2",
     "motion-master": "v1.10.5",
     "motion-master-bridge": "v1.5.1"
   },
