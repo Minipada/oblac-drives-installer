@@ -8,7 +8,7 @@
   with_file:
     - rsa.pub
 
-- name: Ensures /etc/systemd/system/getty@tty1.service.d dir exists
+- name: Ensure that /etc/systemd/system/getty@tty1.service.d exists
   file:
     path: /etc/systemd/system/getty@tty1.service.d
     state: directory

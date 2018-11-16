@@ -1,0 +1,12 @@
+---
+- name: Pull all tagged images of synapticon/motion-master
+  command: docker pull --all-tags synapticon/motion-master
+
+- name: Pull all tagged images of synapticon/motion-master-bridge
+  command: docker pull --all-tags synapticon/motion-master-bridge
+
+- name: Pull all tagged images of synapticon/oblac-drives
+  command: docker pull --all-tags synapticon/oblac-drives
+
+- name: Pull all tagged images of synapticon/oblac-drives-update-service
+  command: docker pull --all-tags synapticon/oblac-drives-update-service

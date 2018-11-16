@@ -10,6 +10,7 @@
     ansible_become_pass: drive
     box_user: drive
     box_docker_engine_api_port: 62376
+    box_fetch_directory_flat: '{{ box_fetch_directory }}/{{ inventory_hostname }}/'
     docker_users:
       - '{{ box_user }}'
     pip_install_packages:
@@ -33,5 +34,5 @@
     - geerlingguy.pip
     - geerlingguy.docker
     - igh-ethercat-master
-    - oblac-drives-update-service
+    - { role: oblac-drives-update-service, tags: ['odus'] }
     - { role: up2, when: box_target == 'up2', tags: ['up2'] }

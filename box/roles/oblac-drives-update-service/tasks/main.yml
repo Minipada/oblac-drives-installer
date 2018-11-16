@@ -1,5 +1,7 @@
 ---
-- name: Ensures /etc/systemd/system/docker.service.d dir exists
+- include: docker-pull-all-tags.yml
+
+- name: Ensure that /etc/systemd/system/docker.service.d exists
   file:
     path: /etc/systemd/system/docker.service.d
     state: directory
@@ -11,7 +13,7 @@
     owner: root
     mode: 0644
 
-- name: Run oblac-drives-update-service container
+- name: Run oblac-drives-update-service
   docker_container:
     name: oblac-drives-update-service
     image: synapticon/oblac-drives-update-service
@@ -25,3 +27,26 @@
     dest: /usr/local/bin/
     owner: root
     mode: 0755
+
+- name: Run oblac-drives-fetch
+  docker_container:
+    name: oblac-drives-fetch
+    image: synapticon/oblac-drives-fetch
+    state: started
+    restart_policy: always
+    pull: yes
+    ports:
+      - '64127:3000'
+    volumes:
+      - /app/public
+
+- name: Run oblac-drives-ip-addr
+  docker_container:
+    name: oblac-drives-ip-addr
+    image: synapticon/oblac-drives-ip-addr
+    state: started
+    restart_policy: always
+    pull: yes
+    network_mode: host
+    env:
+      NETWORK_INTERFACE: '{{ box_primary_interface }}'

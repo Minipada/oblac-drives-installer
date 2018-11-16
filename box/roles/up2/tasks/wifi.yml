@@ -1,0 +1,99 @@
+---
+- name: Copy wifi to /etc/network/interfaces.d/wifi
+  template:
+    src: etc/network/interfaces.d/wifi.j2
+    dest: /etc/network/interfaces.d/wifi
+    owner: root
+    mode: 0644
+
+# https://wiki.debian.org/DHCP_Server
+- name: Ensure line INTERFACESv4={{ box_wifi_interface }} in /etc/default/isc-dhcp-server
+  lineinfile:
+    path: /etc/default/isc-dhcp-server
+    regexp: '^INTERFACESv4='
+    line: 'INTERFACESv4={{ box_wifi_interface }}'
+
+- name: Copy dhcpd.conf to /etc/dhcp/dhcpd.conf
+  copy:
+    src: etc/dhcp/dhcpd.conf
+    dest: /etc/dhcp/dhcpd.conf
+    owner: root
+    mode: 0644
+
+- name: Set fact wpa_supplicant_conf_path
+  set_fact:
+    wpa_supplicant_conf_path: '/etc/wpa_supplicant/wpa_supplicant-{{ box_wifi_interface }}.conf'
+
+- name: 'Stat {{ wpa_supplicant_conf_path }}'
+  stat:
+    path: '{{ wpa_supplicant_conf_path }}'
+  register: wpa_supplicant_conf_path_st
+
+- name: Set fact uuid
+  set_fact:
+    uuid: '{{ ansible_date_time.iso8601_micro | to_uuid }}'
+  when: not wpa_supplicant_conf_path_st.stat.exists
+
+- name: 'Set fact wifi_ssid to oblac-drives-{{ uuid[:8] }}'
+  set_fact:
+    box_wifi_ssid: 'oblac-drives-{{ uuid[:8] }}'
+  when: not wpa_supplicant_conf_path_st.stat.exists
+
+- name: Copy WPA supplicant configuration file
+  template:
+    src: etc/wpa_supplicant/wpa_supplicant.conf.j2
+    dest: '{{ wpa_supplicant_conf_path }}'
+  when: not wpa_supplicant_conf_path_st.stat.exists
+
+- name: Enable wpa_supplicant service
+  systemd:
+    name: wpa_supplicant.service
+    state: started
+    enabled: yes
+
+- name: Enable wpa_supplicant@{{ box_wifi_interface }}.service
+  systemd:
+    name: 'wpa_supplicant@{{ box_wifi_interface }}.service'
+    state: started
+    enabled: yes
+
+- name: 'Fetch {{ wpa_supplicant_conf_path }}'
+  fetch:
+    src: '{{ wpa_supplicant_conf_path }}'
+    dest: '{{ box_fetch_directory_flat }}'
+    flat: yes
+
+- name: Copy before.rules to to /etc/ufw
+  template:
+    src: etc/ufw/before.rules.j2
+    dest: /etc/ufw/before.rules
+
+- name: Change the DEFAULT_INPUT_POLICY to "ACCEPT"
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_INPUT_POLICY='
+    line: 'DEFAULT_INPUT_POLICY="ACCEPT"'
+
+- name: Change the DEFAULT_FORWARD_POLICY to "ACCEPT"
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_FORWARD_POLICY='
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+
+- name: Enable IP forwarding in sysctl
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Enable IP forwarding in ufw
+  lineinfile:
+    path: /etc/ufw/sysctl.conf
+    regexp: '^#net/ipv4/ip_forward='
+    line: 'net/ipv4/ip_forward=1'
+
+- name: Enable UFW
+  ufw:
+    state: enabled
