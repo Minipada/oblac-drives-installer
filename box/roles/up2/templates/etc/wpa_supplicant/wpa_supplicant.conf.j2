@@ -3,6 +3,10 @@ ap_scan=2
 network={
 	ssid="{{ box_wifi_ssid }}"
 	mode=2
-	key_mgmt=NONE
+	key_mgmt=WPA-PSK
+	pairwise=CCMP TKIP
+	group=CCMP TKIP WEP104 WEP40
 	frequency=2437
+	#psk="kqLhoeop"
+	psk=22fe4010f3c7204d82f4df3e71e83819c35bb1aa2c7ccf1793652b8f0b413e4b
 }
