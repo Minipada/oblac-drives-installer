@@ -11,7 +11,7 @@
   git:
     repo: https://github.com/synapticon/Etherlab_EtherCAT_Master.git
     dest: /opt/Etherlab_EtherCAT_Master
-    version: develop
+    version: v1.5.2-sncn-6
   when:
     - not ethercat.stat.exists
     - not etherlab.stat.exists
