@@ -8,7 +8,7 @@
     "motion-master": "v1.10.5",
     "motion-master-bridge": "v1.5.1"
   },
-  "firmwares": ["v4.0.3"]
+  "firmwares": ["v4.0.3", "v4.1.0-beta2"]
 }, {
   "version": "18.6",
   "date": "2018-10-01",
