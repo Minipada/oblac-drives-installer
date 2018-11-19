@@ -2,7 +2,7 @@
   "version": "18.7",
   "date": "2018-11-12",
   "supported": true,
-  "description": "Improved position auto-tuning and support for OBLAC Drives Update Service.",
+  "description": "",
   "dependencies": {
     "oblac-drives": "v1.9.3",
     "motion-master": "v1.10.5",
